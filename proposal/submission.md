@@ -110,7 +110,7 @@ Period|Activity|Milestone
 
 *Mitigation*: Assess baseline performance early on. If results are poor, feature engineering improvements may be needed.
 
-# Grading
+# References
 
 [^1]: MSCI, "MSCI ESG Ratings Methodology," 2024. https://www.msci.com/documents/1296102/34424357/MSCI+ESG+Ratings+Methodology.pdf
 
