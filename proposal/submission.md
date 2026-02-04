@@ -21,9 +21,9 @@ We are building a machine learning system that predicts corporate ESG (Environme
 
 #### What is new in your approach and why do you think it will be successful?
 
-**Democratization:** We use only free public data (SEC 10-K filings, sustainability reports) rather than expensive proprietary data feeds. This ensures our model works for anyone without financial barriers.
+1. ***Democratization:*** We use only free public data (SEC 10-K filings, sustainability reports) rather than expensive proprietary data feeds. This ensures our model works for anyone without financial barriers.
 
-**Explainability:** We use interpretable machine learning techniques (SHAP values) to identify which specific document sections and language patterns drive each prediction. This transparency addresses the "black box" problem, which is when rating agencies don't explain how they calculate scores, and provides actionable feedback.
+2. ***Explainability:*** We use interpretable machine learning techniques (SHAP values) to identify which specific document sections and language patterns drive each prediction. This transparency addresses the "black box" problem, which is when rating agencies don't explain how they calculate scores, and provides actionable feedback.
 
 We expect success because: (1) companies increasingly include ESG-related information in public filings due to investor demand, (2) financial NLP models enable sophisticated document analysis, and (3) recent research demonstrates that machine learning models can achieve high accuracy in ESG prediction using textual and financial data.
 
@@ -31,9 +31,9 @@ We expect success because: (1) companies increasingly include ESG-related inform
 
 The global ESG asset market exceeds $30 trillion, yet most market participants lack access to ESG data:
 
-**Retail investors** who want values-aligned portfolios cannot afford institutional data subscriptions.
+1. ***Retail investors*** who want values-aligned portfolios cannot afford institutional data subscriptions.
 
-**Small and mid-cap companies** lack ESG ratings and remain invisible to ESG-focused capital.
+2. ***Small and mid-cap companies*** lack ESG ratings and remain invisible to ESG-focused capital.
 
 Our project democratizes ESG assessment, enabling informed investment decisions and helping thousands of companies access sustainable capital markets.
 
@@ -90,25 +90,25 @@ Period|Activity|Milestone
 
 #### Data Quality and Temporal Risk
 
-The Kaggle ESG dataset contains ratings from 2022, so we must filter the 10-K filings to be from the same time period for accurate temporal analysis. If historical filings are incomplete for certain companies in our Kaggle ESG dataset, it may shrink from 722. 
+- The Kaggle ESG dataset contains ratings from 2022, so we must filter the 10-K filings to be from the same time period for accurate temporal analysis. If historical filings are incomplete for certain companies in our Kaggle ESG dataset, it may shrink from 722. 
 
 *Mitigation*: Filter 10-K filings to be from 2021/2022 and exclude companies with missing data if they should occur, 722 should be a fine enough buffer. Will reassess.
 
 #### Dataset Size Risk
 
-For complex ML tasks, 722 observations may be insufficient and could lead to overfitting.
+- For complex ML tasks, 722 observations may be insufficient and could lead to overfitting.
 
 *Mitigation*: Use simpler ML models, like logistic regression and random forests, and leverage transfer learning through FinBERT. May need to apply regularization if overfitting occurs.
 
 #### Computational Constraint Risk
 
-Generating embeddings for 722 companies using FinBERT and training multiple models could lead to computational strains.
+- Generating embeddings for 722 companies using FinBERT and training multiple models could lead to computational strains.
 
 *Mitigation*: Process the embeddings in batches and cache. If necessary, prioritize most ESG-relevant document information.
 
 #### Poor Model Performance Risk
 
-10-K text may lack sufficient ESG signals leading to poor model accuracy.
+- 10-K text may lack sufficient ESG signals leading to poor model accuracy.
 
 *Mitigation*: Assess baseline performance early on. If results are poor, feature engineering improvements may be needed.
 
