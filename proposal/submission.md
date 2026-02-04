@@ -25,7 +25,7 @@ We are building a machine learning system that predicts corporate ESG (Environme
 
 2. ***Explainability:*** We use interpretable machine learning techniques (SHAP values) to identify which specific document sections and language patterns drive each prediction. This transparency addresses the "black box" problem, which is when rating agencies don't explain how they calculate scores, and provides actionable feedback.
 
-We expect success because: (1) companies increasingly include ESG-related information in public filings due to investor demand, (2) financial NLP models enable sophisticated document analysis, and (3) recent research demonstrates that machine learning models can achieve high accuracy in ESG prediction using textual and financial data.
+We expect success because: (1) companies increasingly include ESG-related information in public filings due to <u>investor demand</u>, (2) financial NLP models enable sophisticated document analysis, and (3) recent research demonstrates that machine learning models can achieve high accuracy in ESG prediction using textual and financial data.
 
 #### Who cares? If you are successful, what difference will it make?
 
