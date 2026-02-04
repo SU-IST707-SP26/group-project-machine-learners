@@ -7,7 +7,7 @@
 **Point of Contact (POC):** Ethan Radecki (GitHubID: 244611837)
 
 **Team Members:**
-- Caden Lippie (GitHubID: "155611281")
+- Caden Lippie (GitHubID: 155611281)
 - John Masseria (GitHubID: 194737462)
 - Ethan Radecki (GitHubID: 244611837)
 
