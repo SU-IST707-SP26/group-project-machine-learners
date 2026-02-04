@@ -7,13 +7,8 @@
 **Point of Contact (POC):** Ethan Radecki (GitHubID: 244611837)
 
 **Team Members:**
-<<<<<<< HEAD
 - Caden Lippie (GitHubID: "155611281")
-- John Masseria (GitHubID: "###")
-=======
-- Caden Lippie (GitHubID: "###")
 - John Masseria (GitHubID: 194737462)
->>>>>>> 7b25d2aa2967a4ffc7aa228424300b034995a34e
 - Ethan Radecki (GitHubID: 244611837)
 
 Ethan Radecki will manage the repository and serve as the primary contact for project submissions.
