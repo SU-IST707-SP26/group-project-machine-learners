@@ -75,8 +75,6 @@ Finally, for evaluation we will use regression metrics (MAE, R²) to evaluate nu
 
 ### Project Plan
 
-Along with this project proposal, you will commit an **initial version of the project management documents**.  However, I would also like you to provide a rough timeline here for the project in the following form, broken out into two week periods.
-
 Period|Activity|Milestone
 |---|---|---|
 |2/2 - 2/16|Proposal and Vision Finalized </br> Full Data Retreival of 10-K filings </br> Initial EDA on both datasets|All data collected and verified, specifically 10-K filings </br> Initial data quality assessment complete
@@ -113,12 +111,6 @@ Period|Activity|Milestone
 *Mitigation*: Assess baseline performance early on. If results are poor, feature engineering improvements may be needed.
 
 # Grading
-
-- Does your proposal include all of the above mentioned sections? [1 point]
-- Have you clearly identifed your stakeholders and their needs [1 point]
-- Have you answered the 5 Heilmeier questions mentioned effectively [1 points]
-- Are your initial project management documents in place and do they follow the guidelines [1 point]
-- Is you proposal plan feasible, and do you have sufficient detail to give me confidence that you will succeed? [1 point]
 
 [^1]: MSCI, "MSCI ESG Ratings Methodology," 2024. https://www.msci.com/documents/1296102/34424357/MSCI+ESG+Ratings+Methodology.pdf
 
