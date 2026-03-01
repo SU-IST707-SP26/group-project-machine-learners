@@ -11,7 +11,7 @@
 - [✅] M2.T1 — Collect SEC 10-K files for companies in ESG dataset, must filter for temporal variable (Ethan)
 - [ ] M2.T2 — Verify target feature(s) from ESG dataset - number scores and class scores (X)
 - [⏳] M2.T3 — Assess text quality and length distribution across 10-K sections to validate FinBERT input feasibility (Ethan) 
-- [ ] M2.T4 — Complete EDA on ESG dataset, identify potential class/industry imbalances (X)
+- [✅] M2.T4 — Complete EDA on ESG dataset, identify potential class/industry imbalances (Ethan)
 
 ### Milestone 3: Preprocessing Pipeline, Understand 10-K Structure, FinBERT Operational
 - [ ] M3.T1 — Collect and extract Business, Risk Factors, and MD&A sections from 10-K filings for all companies in ESG dataset (X)
@@ -53,3 +53,6 @@
 
 ### 2026-02-23
 - (Ethan) ⏳ M2.T3 — 10-K filing data extraction for business, mda, and risk sections is computational intensive, may need to optimize operations or pipeline if computation with FinBERT because extreme as well.
+
+### 2026-02-28
+- (Ethan) ⏳ M2.T4 — ESG dataset EDA revealed environmental score bimodality and industry imbalance that will need to be addressed during feature engineering and model training.

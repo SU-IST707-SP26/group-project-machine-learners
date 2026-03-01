@@ -1,5 +1,26 @@
 # WORKLOG.md
 
+## 2026-02-28 - ESG Dataset EDA Complete (Ethan)
+
+**Context**: Need to understand the structure, quality, and distribution of the ESG ratings dataset before feeding it into the FinBERT model pipeline.
+
+**Work Completed**:
+- Performed full exploratory data analysis on the Kaggle ESG dataset (709 companies after cleaning)
+- Identified and removed 13 SPAC companies with missing industry labels
+- Standardized 4 inconsistent industry labels (formatting inconsistencies only)
+- Analyzed score distributions, grade distributions, level distributions, and categorical breakdowns
+- Performed correlation analysis and pairplot visualization across ESG pillars
+- Conducted industry breakdowns including mean scores, boxplots, and pillar heatmap
+- Performed temporal analysis confirming dataset is a single 2022 cross-sectional snapshot
+- Conducted outlier detection using IQR method, identifying 12 outlier companies
+- Verified score vs grade consistency, confirming bond-rating style hierarchy
+- Confirmed 100% CIK coverage across all 709 companies
+
+**Files Created**:
+- `work/EDA_ESG.ipynb`
+
+**Impact**: M2.T4 complete. ESG dataset is cleaned, understood, and ready for merging with 10-K filing text embeddings in the next pipeline stage.
+
 ## 2026-02-23 - Initial 10-K Filings Downloads/Extraction Functions Complete (Ethan)
 
 **Context**: Need to extract relevant text data from 10-K filings for FinBERT model, but text files are very large so only necessary sections need to be extracted - business, mda, risks.
