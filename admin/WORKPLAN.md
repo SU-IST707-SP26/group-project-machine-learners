@@ -14,7 +14,7 @@
 - [✅] M2.T4 — Complete EDA on ESG dataset, identify potential class/industry imbalances (Ethan)
 
 ### Milestone 3: Preprocessing Pipeline, Understand 10-K Structure, FinBERT Operational
-- [ ] M3.T1 — Collect and extract Business, Risk Factors, and MD&A sections from 10-K filings for all companies in ESG dataset (X)
+- [⏳] M3.T1 — Collect and extract Business, Risk Factors, and MD&A sections from 10-K filings for all companies in ESG dataset (Ethan)
 - [ ] M3.T2 — Audit extracted sections for quality, length distribution, and partial extractions (X)
 - [ ] M3.T3 — Merge extracted 10-K data with ESG dataset on ticker symbol (X)
 - [ ] M3.T4 — Complete first test of FinBERT model with extracted text data, verify embeddings generate correctly (X)
@@ -56,3 +56,6 @@
 
 ### 2026-02-28
 - (Ethan) ⏳ M2.T4 — ESG dataset EDA revealed environmental score bimodality and industry imbalance that will need to be addressed during feature engineering and model training.
+
+### 2026-03-02
+- (Ethan) ⏳ M3.T1 — Initial extractions complete for 629 full companies (all 3 sections) and 11 partial companies (at least 1 section), need to audit and validate extracted json files.

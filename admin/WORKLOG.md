@@ -1,5 +1,16 @@
 # WORKLOG.md
 
+## 2026-03-02 - ESG Dataset EDA Complete (Ethan)
+
+**Context**: Need to extract business, risk, and MDA sections of 10-K filings for as many companies in the ESG dataset, so embeddings can be generated and initial FinBERT model can be completed before checkpoint is due.
+
+**Work Completed**:
+- Refined preprocessing and processing pipeline for 10-K key section extraction.
+- Identified CIK as a better identification for 10-K file extraction than ticker.
+- Created ESG_data_cleaned.csv, which is just the original dataset without companies with NA for industry.
+
+**Impact**: M3.T1 in progress. Relevant sections have been extracted from 10-K filings for over 600 companies in the ESG dataset, need to audit the extractions to validate their sections for embedding generation.
+
 ## 2026-02-28 - ESG Dataset EDA Complete (Ethan)
 
 **Context**: Need to understand the structure, quality, and distribution of the ESG ratings dataset before feeding it into the FinBERT model pipeline.
