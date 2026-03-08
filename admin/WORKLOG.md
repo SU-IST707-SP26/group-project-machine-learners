@@ -1,6 +1,6 @@
 # WORKLOG.md
 
-## 2026-03-07 - EDA on Filing Features, Feature Engineering, Modeling Iteration, Checkpoint Submission (Caden)
+## 2026-03-07 - EDA on Filing Features, Feature Engineering, Modeling Iteration, Checkpoint Submission (Caden, Ethan, John)
 
 **Context**: Baseline models from work.ipynb showed negative R² across all targets, indicating the raw 76-feature FinBERT set lacked the signal needed for reliable ESG score prediction. EDA on the feature dataset was needed to diagnose why and guide remediation before the checkpoint submission deadline.
 
