@@ -9,32 +9,36 @@
 
 ### Milestone 2: Data Verification and Quality Assessment
 - [✅] M2.T1 — Collect SEC 10-K files for companies in ESG dataset, must filter for temporal variable (Ethan)
-- [ ] M2.T2 — Verify target feature(s) from ESG dataset - number scores and class scores (X)
-- [⏳] M2.T3 — Assess text quality and length distribution across 10-K sections to validate FinBERT input feasibility (Ethan) 
+- [✅] M2.T2 — Verify target features from ESG dataset - numeric scores and letter grades (Caden)
+- [✅] M2.T3 — Assess text quality and length distribution across 10-K sections to validate FinBERT input feasibility (Ethan/Caden)
 - [✅] M2.T4 — Complete EDA on ESG dataset, identify potential class/industry imbalances (Ethan)
 
 ### Milestone 3: Preprocessing Pipeline, Understand 10-K Structure, FinBERT Operational
-- [⏳] M3.T1 — Collect and extract Business, Risk Factors, and MD&A sections from 10-K filings for all companies in ESG dataset (Ethan)
-- [ ] M3.T2 — Audit extracted sections for quality, length distribution, and partial extractions (X)
-- [ ] M3.T3 — Merge extracted 10-K data with ESG dataset on ticker symbol (X)
-- [ ] M3.T4 — Complete first test of FinBERT model with extracted text data, verify embeddings generate correctly (X)
+- [✅] M3.T1 — Collect and extract Business, Risk Factors, and MD&A sections from 10-K filings for all companies in ESG dataset (Ethan/Caden)
+- [✅] M3.T2 — Audit extracted sections for quality, length distribution, and partial extractions (Caden)
+- [✅] M3.T3 — Merge extracted 10-K data with ESG dataset on ticker symbol (Caden)
+- [✅] M3.T4 — Complete first test of FinBERT model with extracted text data, verify embeddings generate correctly (Caden)
+- [✅] M3.T5 — EDA on extracted 10-K filing features: validate FinBERT sentiment features, keyword distributions, document structure, and feature-target correlations (Caden)
 
-### Milestone 4: FinBERT Embeddings Generated, Train/Test Split, Logistic Regression Output
-- [ ] M4.T1 — Generate FinBERT embeddings for all three sections across all companies (X)
-- [ ] M4.T2 — Combine FinBERT embeddings with company metadata (industry classification) (X)
-- [ ] M4.T3 — Perform stratified train/test split (X)
-- [ ] M4.T4 — Train baseline logistic regression model and evaluate performance (X)
+### Milestone 4: FinBERT Embeddings Generated, Train/Test Split, Baseline Model Output
+- [✅] M4.T1 — Generate FinBERT embeddings for all three sections across all 332 companies with complete filings (Ethan)
+- [✅] M4.T2 — Combine FinBERT features with company metadata: industry one-hot encoding, document structure features (Ethan/Caden)
+- [✅] M4.T3 — Perform 80/20 train/test split (Caden)
+- [✅] M4.T4 — Train baseline Ridge Regression and XGBoost models; evaluate with 5-fold CV (Caden)
+- [✅] M4.T5 — Apply EDA-driven feature engineering: drop zero-variance and near-universal features, log-transform keyword frequencies, clip pos_neg_ratio outliers, add one-hot industry dummies (Caden)
+- [✅] M4.T6 — Complete and submit checkpoint/submission.ipynb with all rubric sections (Team)
 
 ### Milestone 5: Multiple Models Trained/Compared and Best Model Identified
-- [ ] M5.T1 — Train additional models (Random Forest, Gradient Boosting, XGBoost) (X)
+- [⏳] M5.T1 — Train additional models: Lasso/ElasticNet with LassoCV, Gradient Boosting; reframe target as industry-relative residuals (Team)
 - [ ] M5.T2 — Tune hyperparameters on top performing models (X)
 - [ ] M5.T3 — Compare models using consistent evaluation metrics (RMSE, R², F1) (X)
 - [ ] M5.T4 — Apply SHAP values to best model for explainability analysis (X)
 - [ ] M5.T5 — Convert predicted scores to letter grades and document final model selection (X)
-
+- [ ] M5.T6 — Raise FinBERT sentence cap to 300+ for Social/Governance pillars and re-run feature extraction (Ethan)
+- [ ] M5.T7 — Apply class weighting to grade classifier to address BBB class imbalance (X)
 
 ### Milestone 6: Final Model Validated, Evaluation, Explainability Framework
-- [ ] M6.T1 — Validate final model on holdout test set and report evaluation metrics (X)
+- [ ] M6.T1 — Validate final model on holdout test set and report all evaluation metrics (X)
 - [ ] M6.T2 — Run SHAP analysis and identify top features driving ESG score predictions (X)
 - [ ] M6.T3 — Analyze model performance across industries and ESG pillars (X)
 - [ ] M6.T4 — Document explainability findings and compare against commercial ESG rating methodology (X)
@@ -52,10 +56,32 @@
 - (Ethan) ⏳ M1.T3 — SEC 10-K filing data must be filtered so it is from before the ESG data from Kaggle; Kaggle dataset from throughout 2022
 
 ### 2026-02-23
-- (Ethan) ⏳ M2.T3 — 10-K filing data extraction for business, mda, and risk sections is computational intensive, may need to optimize operations or pipeline if computation with FinBERT because extreme as well.
+- (Ethan) ⏳ M2.T3 — 10-K filing data extraction for business, mda, and risk sections is computationally intensive, may need to optimize operations or pipeline if computation with FinBERT becomes extreme as well.
 
 ### 2026-02-28
 - (Ethan) ⏳ M2.T4 — ESG dataset EDA revealed environmental score bimodality and industry imbalance that will need to be addressed during feature engineering and model training.
 
 ### 2026-03-02
-- (Ethan) ⏳ M3.T1 — Initial extractions complete for 629 full companies (all 3 sections) and 11 partial companies (at least 1 section), need to audit and validate extracted json files.
+- (Ethan) ⏳ M3.T1 — Initial extractions complete for roughly 629 full companies (all 3 sections) and 11 partial companies (at least 1 section), need to audit and validate extracted json files.
+
+### 2026-03-04
+- (Ethan/Caden) ✅ M3.T1 — Finalized 10-K section extraction pipeline: 332 companies with complete 3/3 sections, 12 partial, 25 failures. All results stored in data/extracted_sections/.
+- (Caden) ✅ M3.T2 — Ran extraction quality check: Business ~67,600 chars, Risk Factors ~123,100 chars, MD&A ~96,000 chars average. 12 partial extractions identified and excluded from modeling.
+- (Caden) ✅ M3.T3 — Merged ESG labels with extracted section metadata; merged_features_labels.csv created.
+
+### 2026-03-06
+- (Caden) ✅ M3.T4 — FinBERT feature extraction complete for all 332 companies (~3.5 hours CPU, batch inference). 76 features per company generated and cached to data/finbert_features/.
+- (Caden) ✅ M4.T1 — FinBERT features saved to data/finbert_features/finbert_features.csv.
+- (Caden) ✅ M4.T2 — Features merged with ESG labels in merged_features_labels.csv; ready for modeling.
+
+### 2026-03-07
+- (Caden) 🆕 M3.T5 — Added EDA task on extracted 10-K filing features to validate feature quality before modeling.
+- (Caden) ✅ M3.T5 — EDA revealed 6 zero-variance features, extreme pos_neg_ratio outliers (max ~9M), right-skewed keyword frequencies, and 68-79% of companies hitting the 100-sentence cap for Social/Governance pillars; filled out work/EDA_10-K_filings.ipynb.
+- (Caden) ✅ M4.T3 — 80/20 train/test split applied; 5-fold CV used for robust performance estimates.
+- (Caden) ✅ M4.T4 — Ridge baseline: Test R² = −0.12. XGBoost baseline: Test R² = −0.10, 5-CV R² = +0.054. Feature engineering improvements raised both from original −0.27 / −0.14.
+- (Caden) 🆕 M4.T5 — Added feature engineering step based on EDA recommendations.
+- (Caden) ✅ M4.T5 — Applied: dropped 11 zero-variance/near-universal presence features, clipped pos_neg_ratio at 99th percentile, log-transformed 14 keyword frequency features, added 38 one-hot industry dummies → 103 final features.
+- (Caden) ✅ M4.T6 — checkpoint/submission.ipynb completed with all rubric sections: Overview, Data + EDA, Preprocessing, Modeling, Problems & Challenges, Next Steps.
+- (Team) 🆕 M5.T6 — Added task to raise FinBERT sentence cap; EDA confirmed floor effect for Social/Governance features (68-79% hit cap).
+- (Team) 🆕 M5.T7 — Added task to apply class weighting to grade classifier; BBB class is 52% of dataset causing prediction bias.
+- (Caden) 🔄 M5.T1 — Updated scope: added Lasso/ElasticNet with LassoCV and industry-relative residual target formulation based on baseline model analysis showing R² ceiling with current approach.
