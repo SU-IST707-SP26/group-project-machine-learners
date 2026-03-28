@@ -1,5 +1,47 @@
 # WORKLOG.md
 
+## 2026-03-27 — Feedback Response: Bimodality Investigation, SHAP Threshold Analysis, UMAP, Sentence Count Ablation (Caden)
+
+**Context**: Received checkpoint feedback noting that (1) the bimodal environment score distribution was not fully explained and should be investigated within industries, (2) UMAP should be tried to find non-linear structure in the FinBERT feature space that PCA may miss, (3) the 100-sentence cap likely hurts model quality, and (4) the spike at 500 on environment score looks like a rater threshold effect rather than a natural distribution — identifying what decision rule drives it is a key next step.
+
+**Work Completed**:
+
+*Bimodality Analysis — `EDA_10-K_filings.ipynb`*
+- Added full within-industry bimodality analysis: per-industry KDE + histogram panels (all industries with ≥10 companies), 500-threshold line on each, plus a summary bar chart of % of companies above 500 per industry. Confirmed bimodality persists within several individual industries, ruling out industry mix as the sole explanation.
+- Added company size proxy analysis: scatter plot and box plot of `doc_length` vs. above/below 500 groups with Mann-Whitney U test. Larger filings (company size proxy) are associated with crossing the threshold.
+- Added threshold feature comparison: compared mean feature values for companies in the 400–499 band vs. the 500–599 band; identified the top discriminating features by absolute mean difference and % difference.
+- Added `total_grade` classification analysis: overall grade distribution bar chart, binary Low (B/BB) vs High (BBB/A) split, per-industry grade bar charts, stacked proportional bar chart sorted by % high grades, doc_length box plots by grade (Kruskal-Wallis test), and a heatmap + grouped bar chart of the top 15 features by A–B mean difference.
+
+*SHAP Threshold Analysis — `Feature_Extraction_and_Modeling.ipynb`*
+- Added new section using the trained `environment_score` XGBoost model to compute SHAP values for all companies in the 400–499 and 500–599 bands (not just the test split).
+- Mean SHAP difference bar chart (above − below 500) identifies which features the model uses to push predictions across the threshold — the candidates for the rater's decision rule.
+- Side-by-side SHAP beeswarm plots for each band show how SHAP distributions shift at the threshold.
+- Raw feature distribution histograms for the top 5 discriminating features with Mann-Whitney U tests and median comparisons.
+- SHAP decision plot for all threshold-band companies, with above-500 companies highlighted and the threshold marked.
+
+*UMAP — `EDA_10-K_filings.ipynb`*
+- Added UMAP section using FinBERT sentiment features, pillar scores, coverage percentages, and sentence counts as the feature matrix.
+- PCA (2D) vs. UMAP (2D) side-by-side, both coloured by `total_grade` — directly tests whether UMAP reveals grade clusters that PCA misses.
+- Second UMAP panel coloured by industry — separates whether grade or industry is the dominant organising principle in the feature space.
+- PCA scree plot (per-component and cumulative variance) shows how many dimensions are needed to capture 90%/95% of variance, validating the professor's suggestion to use more than 2 PCA components.
+
+*Sentence Count Feature Analysis — `Feature_Extraction_and_Modeling.ipynb`*
+- Confirmed `E_sentence_count`, `S_sentence_count`, `G_sentence_count` are present in the dataset and checked whether they are in the current `feature_cols`.
+- Plotted distributions of all three with the cap-at-100 line annotated; `S_sentence_count` and `G_sentence_count` are heavily capped (many companies hit 100), while `E_sentence_count` varies meaningfully.
+- Correlation heatmap of sentence counts vs. all four ESG score targets.
+- SHAP importance bar chart highlighting where the sentence count columns rank among all features in the environment model (coloured orange).
+- 5-fold CV ablation: R² with vs. without sentence count features, directly answering the professor's question about whether they add value. If Δ R² ≈ 0, the cap-induced ceiling is confirmed as the bottleneck and raising it is the fix.
+
+**Files Modified**:
+- `work/EDA_10-K_filings.ipynb` (added bimodality, grade, UMAP, and scree sections)
+- `work/Feature_Extraction_and_Modeling.ipynb` (added SHAP threshold analysis and sentence count analysis)
+
+**Impact**: M5.T8, M5.T9, M5.T10, M5.T11 complete. Directly addresses all four points raised in the checkpoint feedback. Key findings pending notebook execution: (1) if within-industry bimodality holds, company size / rater thresholds are the driver; (2) if UMAP shows cleaner grade clusters than PCA, non-linear modelling is justified; (3) ablation will confirm whether the 100-sentence cap is actively hurting S/G predictions.
+
+**Next Steps**: Raise FinBERT sentence cap to 300+ and re-run feature extraction (M5.T6). Investigate non-semantic structured features such as market cap and revenue as supplements (M5.T12). Consider reframing as a binary classification problem (B/BB vs BBB/A) given the confirmed bimodal structure (M5.T13).
+
+---
+
 ## 2026-03-07 - EDA on Filing Features, Feature Engineering, Modeling Iteration, Checkpoint Submission (Caden, Ethan, John)
 
 **Context**: Baseline models from work.ipynb showed negative R² across all targets, indicating the raw 76-feature FinBERT set lacked the signal needed for reliable ESG score prediction. EDA on the feature dataset was needed to diagnose why and guide remediation before the checkpoint submission deadline.

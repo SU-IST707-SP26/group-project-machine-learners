@@ -32,10 +32,16 @@
 - [⏳] M5.T1 — Train additional models: Lasso/ElasticNet with LassoCV, Gradient Boosting; reframe target as industry-relative residuals (Team)
 - [ ] M5.T2 — Tune hyperparameters on top performing models (X)
 - [ ] M5.T3 — Compare models using consistent evaluation metrics (RMSE, R², F1) (X)
-- [ ] M5.T4 — Apply SHAP values to best model for explainability analysis (X)
+- [⏳] M5.T4 — Apply SHAP values to best model for explainability analysis — threshold SHAP analysis complete for environment score (X)
 - [ ] M5.T5 — Convert predicted scores to letter grades and document final model selection (X)
 - [ ] M5.T6 — Raise FinBERT sentence cap to 300+ for Social/Governance pillars and re-run feature extraction (Ethan)
 - [ ] M5.T7 — Apply class weighting to grade classifier to address BBB class imbalance (X)
+- [✅] M5.T8 — Investigate within-industry bimodality of environment score distribution; check whether grade distribution is also bimodal within industries (Caden)
+- [✅] M5.T9 — SHAP-based threshold analysis: identify features that discriminate companies just below vs. at/above the 500 environment score boundary (Caden)
+- [✅] M5.T10 — UMAP visualization of FinBERT feature space; compare against PCA for non-linear cluster structure; colour by grade and industry (Caden)
+- [✅] M5.T11 — Evaluate sentence count columns (E/S/G_sentence_count) as features; ablation test and SHAP importance check (Caden)
+- [ ] M5.T12 — Investigate non-semantic features as supplements to FinBERT: market cap, revenue, employee count, and other structured company-level signals (X)
+- [ ] M5.T13 — Revisit problem framing: evaluate whether grade classification (B/BB/BBB/A) outperforms ESG score regression given the confirmed bimodal structure (X)
 
 ### Milestone 6: Final Model Validated, Evaluation, Explainability Framework
 - [ ] M6.T1 — Validate final model on holdout test set and report all evaluation metrics (X)
@@ -85,3 +91,12 @@
 - (Team) 🆕 M5.T6 — Added task to raise FinBERT sentence cap; EDA confirmed floor effect for Social/Governance features (68-79% hit cap).
 - (Team) 🆕 M5.T7 — Added task to apply class weighting to grade classifier; BBB class is 52% of dataset causing prediction bias.
 - (Caden) 🔄 M5.T1 — Updated scope: added Lasso/ElasticNet with LassoCV and industry-relative residual target formulation based on baseline model analysis showing R² ceiling with current approach.
+
+### 2026-03-27
+- (Caden) ✅ M5.T8 — Added within-industry bimodality analysis to EDA_10-K_filings.ipynb: per-industry KDE/histogram plots, % above-500 bar chart, company size (doc_length) Mann-Whitney test, and threshold feature comparison (400–499 vs 500–599 bands). Bimodality persists within industries, implicating company size and rater threshold effects.
+- (Caden) ✅ M5.T8 — Extended bimodality analysis to total_grade classification: overall grade distribution, per-industry grade bar charts, stacked proportion chart, doc_length by grade (Kruskal-Wallis), and feature means heatmap by grade.
+- (Caden) ✅ M5.T9 — Added threshold SHAP analysis to Feature_Extraction_and_Modeling.ipynb: computed SHAP values for all companies in 400–599 band, mean SHAP difference bar chart, side-by-side beeswarms, raw distribution histograms with Mann-Whitney tests, and SHAP decision plot.
+- (Caden) ✅ M5.T10 — Added UMAP section to EDA_10-K_filings.ipynb: PCA vs UMAP side-by-side coloured by grade, UMAP coloured by industry, and PCA scree plot showing variance explained per component.
+- (Caden) ✅ M5.T11 — Added sentence count analysis to Feature_Extraction_and_Modeling.ipynb: confirmed E/S/G_sentence_count in feature set, plotted cap-at-100 distributions, correlation heatmap vs ESG scores, SHAP importance ranking, and 5-fold CV ablation (with vs. without sentence counts).
+- (Caden) 🆕 M5.T12 — Added task to investigate non-semantic structured features (market cap, revenue, etc.) as supplements to FinBERT features.
+- (Caden) 🆕 M5.T13 — Added task to revisit classification vs. regression framing given confirmed bimodal grade structure.
