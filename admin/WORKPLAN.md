@@ -40,8 +40,9 @@
 - [✅] M5.T9 — SHAP-based threshold analysis: identify features that discriminate companies just below vs. at/above the 500 environment score boundary (Caden)
 - [✅] M5.T10 — UMAP visualization of FinBERT feature space; compare against PCA for non-linear cluster structure; colour by grade and industry (Caden)
 - [✅] M5.T11 — Evaluate sentence count columns (E/S/G_sentence_count) as features; ablation test and SHAP importance check (Caden)
-- [ ] M5.T12 — Investigate non-semantic features as supplements to FinBERT: market cap, revenue, employee count, and other structured company-level signals (X)
-- [ ] M5.T13 — Revisit problem framing: evaluate whether grade classification (B/BB/BBB/A) outperforms ESG score regression given the confirmed bimodal structure (X)
+- [✅] M5.T12 — Investigate non-semantic features as supplements to FinBERT: market cap, revenue, employee count, and other structured company-level signals (Caden)
+- [✅] M5.T13 — Revisit problem framing: evaluate whether grade classification (B/BB/BBB/A) outperforms ESG score regression given the confirmed bimodal structure (Caden)
+- [ ] M5.T14 — Analyze EU vs. US company ESG score distributions to test mandatory-reporting hypothesis as driver of bimodality (X)
 
 ### Milestone 6: Final Model Validated, Evaluation, Explainability Framework
 - [ ] M6.T1 — Validate final model on holdout test set and report all evaluation metrics (X)
@@ -91,6 +92,11 @@
 - (Team) 🆕 M5.T6 — Added task to raise FinBERT sentence cap; EDA confirmed floor effect for Social/Governance features (68-79% hit cap).
 - (Team) 🆕 M5.T7 — Added task to apply class weighting to grade classifier; BBB class is 52% of dataset causing prediction bias.
 - (Caden) 🔄 M5.T1 — Updated scope: added Lasso/ElasticNet with LassoCV and industry-relative residual target formulation based on baseline model analysis showing R² ceiling with current approach.
+
+### 2026-04-05
+- (Caden) ✅ M5.T12 — Built SEC EDGAR Company Facts pipeline: fetched FY2021 fundamentals for all 332 companies (0 failures), saved to data/structured_features/sec_fundamentals.csv. 9 features merged into Feature_Extraction_and_Modeling.ipynb Step 7.6 with industry-median imputation. Feature matrix: 103 → 112 features.
+- (Caden) ✅ M5.T13 — Decided to retain continuous regression targets. Bimodal structure will be examined directly rather than collapsed into binary classes; continuous model preserves signal for explainability.
+- (Caden) 🆕 M5.T14 — Added EU vs. US ESG score distribution analysis task to directly test the mandatory-reporting hypothesis for bimodality.
 
 ### 2026-03-27
 - (Caden) ✅ M5.T8 — Added within-industry bimodality analysis to EDA_10-K_filings.ipynb: per-industry KDE/histogram plots, % above-500 bar chart, company size (doc_length) Mann-Whitney test, and threshold feature comparison (400–499 vs 500–599 bands). Bimodality persists within industries, implicating company size and rater threshold effects.

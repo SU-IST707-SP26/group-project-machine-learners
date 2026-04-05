@@ -1,5 +1,71 @@
 # WORKLOG.md
 
+## 2026-04-05 — Bimodality Research, SEC EDGAR Structured Features Pipeline (Caden)
+
+**Context**: Following the 03-27 feedback response, two threads were pursued: (1) deeper domain research into the causes of the bimodal ESG score distribution to inform modeling decisions, and (2) implementing the structured company-level features identified in M5.T12 using the SEC EDGAR Company Facts API.
+
+**Work Completed**:
+
+*Bimodality Domain Research*
+- Decided to retain continuous regression targets rather than reframing as binary classification (resolves M5.T13) — the bimodal structure is worth modeling directly, and a continuous model preserves more information for explainability.
+- Researched candidate explanations for the bimodal environment score distribution:
+  - **Selective disclosure**: companies only report on metrics they are scored on, leaving unreported metrics as zero structurally inflates scores for comprehensive reporters and deflates scores for partial reporters.
+  - **EU mandatory reporting**: EU regulations require disclosure on certain ESG metrics where the US does not; if EU companies cluster above 500 this would explain the upper mode. Supporting literature: https://www.sciencedirect.com/science/article/pii/S104244312500023X
+  - **Company size as dominant predictor**: larger companies have dedicated ESG teams and report more comprehensively, pushing them into the upper mode. Supporting literature: https://esgthereport.com/the-barriers-to-esg-reports-for-midsize-small-cap-companies/ and https://www.pm-research.com/content/pmrjesg/1/4/31
+  - **Threshold incentives**: companies may be incentivized to hit specific score thresholds (e.g., required by ESG-linked financing) rather than optimize the continuous score, creating a natural clustering effect.
+  - **Government mandates**: regulatory floors for governance disclosure raise the lower bound of governance score distributions, contributing to the bimodal shape.
+- Identified new next steps: (1) examine EU vs. US company score distributions as a direct test of the reporting-mandate hypothesis, (2) add disclosure rate / reporting completeness as a feature, (3) consider separate models or reporting-indicator variables.
+
+*SEC EDGAR Structured Features — `work/structured_features_collection.ipynb`*
+- Created `work/structured_features_collection.ipynb` to fetch FY2021 10-K financial fundamentals for all 332 modeling companies via the SEC EDGAR Company Facts API (`https://data.sec.gov/api/xbrl/companyfacts/`).
+- Used FY2021 data (not current) to maintain temporal alignment with the ESG ratings dataset, which was processed in April 2022 based on FY2021 filings.
+- Fetched 8 raw features per company: `total_assets`, `total_revenue`, `net_income`, `long_term_debt`, `stockholders_equity`, `operating_income`, `cash_and_equivalents`, `public_float` (market cap proxy from DEI namespace).
+- Revenue extraction uses a 7-concept fallback list to handle different XBRL tagging conventions across industries.
+- Derived 3 ratio features: `debt_to_assets`, `profit_margin`, `return_on_equity`.
+- Log-transformed all 6 size/scale features to normalize across orders of magnitude.
+- Ran notebook: 332/332 companies fetched with 0 HTTP failures. Coverage: `total_assets` 99%, `total_revenue` 95%, `public_float` 98%, `long_term_debt` 49% (expected — many companies carry no long-term debt or use non-standard tags).
+- Saved to `data/structured_features/sec_fundamentals.csv` (332 × 17 features).
+- Added EDA: distribution plots for all features and Pearson correlation heatmap vs. all four ESG score targets.
+
+*Structured Features Integration — `work/Feature_Extraction_and_Modeling.ipynb`*
+- Added Step 7.6 to `Feature_Extraction_and_Modeling.ipynb` to merge SEC fundamentals into the modeling pipeline after the existing Step 7.5 feature engineering.
+- Imputation strategy: industry-median first, then global-median fallback — chosen over global-median-only because size and leverage vary substantially across industries.
+- Ratio extremes winsorised at 1st/99th percentile before merging.
+- Step 7.6 is gracefully skipped if `sec_fundamentals.csv` is not yet present, so the notebook remains runnable without the structured features.
+- Ran notebook: 332/332 companies matched, all 9 features merged with zero missing values post-imputation. Engineered feature matrix expanded from 103 → 112 features. All downstream steps (model training, SHAP, per-pillar analysis) use the expanded set automatically.
+
+*Model Performance — Before vs. After Structured Features (same notebook, same train/test split)*
+
+Total score XGBoost test R² improved from negative to positive; environment score CV R² improved meaningfully. Governance remains a poor fit with both feature sets.
+
+| | **103 features (FinBERT only)** | | **112 features (+SEC structured)** | |
+|---|---|---|---|---|
+| **Model / Pillar** | **Test R²** | **5-CV R²** | **Test R²** | **5-CV R²** |
+| Ridge (total_score) | −0.122 | −0.013 | −0.167 | +0.028 |
+| XGBoost (total_score) | −0.101 | +0.054 | **+0.080** | **+0.061** |
+| XGBoost — Environment | −0.009 | +0.100 | **+0.147** | **+0.138** |
+| XGBoost — Social | −0.145 | +0.028 | **+0.038** | **+0.055** |
+| XGBoost — Governance | −0.316 | −0.079 | −0.248 | −0.152 |
+
+Key observations:
+- **XGBoost total score test R²**: −0.101 → +0.080 (+0.181 swing) — the structured features pushed the model into positive predictive territory for the first time.
+- **Environment score**: largest absolute gain; CV R² +0.100 → +0.138. Consistent with company size being a dominant driver of environment disclosure quality.
+- **Social score**: test R² recovered from −0.145 to +0.038 — meaningful improvement though still weak.
+- **Governance score**: still negative in both runs. The structured financial features do not capture what drives governance ratings, suggesting governance is determined by board composition, shareholder structure, and policy disclosures not present in 10-K financials or FinBERT sentiment.
+- **Ridge degraded slightly** on test R² (−0.122 → −0.167) while CV R² improved; this is consistent with Ridge struggling to leverage the new non-linear size signals that XGBoost can exploit.
+
+**Files Created**:
+- `work/structured_features_collection.ipynb` (SEC EDGAR fetch, EDA, and save pipeline)
+- `data/structured_features/sec_fundamentals.csv` (332 companies × 17 features)
+
+**Files Modified**:
+- `work/Feature_Extraction_and_Modeling.ipynb` (added Step 7.6 — structured features merge and imputation)
+
+**Impact**: M5.T12 complete. M5.T13 resolved (retaining continuous regression). Feature matrix now includes company-scale signals that directly test the company-size hypothesis for bimodality. The 9 new features cost no additional modeling infrastructure — they are automatically picked up by the existing `prepare_modeling_data` function.
+
+**Next Steps**: Run EU vs. US score distribution analysis to test the mandatory-reporting hypothesis (new). Raise FinBERT sentence cap to 300+ and re-run feature extraction (M5.T6). Train additional models: Lasso/ElasticNet and Gradient Boosting with industry-relative residual targets (M5.T1). Tune and compare top models (M5.T2, M5.T3).
+
+
 ## 2026-03-27 — Feedback Response: Bimodality Investigation, SHAP Threshold Analysis, UMAP, Sentence Count Ablation (Caden)
 
 **Context**: Received checkpoint feedback noting that (1) the bimodal environment score distribution was not fully explained and should be investigated within industries, (2) UMAP should be tried to find non-linear structure in the FinBERT feature space that PCA may miss, (3) the 100-sentence cap likely hurts model quality, and (4) the spike at 500 on environment score looks like a rater threshold effect rather than a natural distribution — identifying what decision rule drives it is a key next step.
