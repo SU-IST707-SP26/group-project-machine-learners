@@ -43,6 +43,8 @@
 - [✅] M5.T12 — Investigate non-semantic features as supplements to FinBERT: market cap, revenue, employee count, and other structured company-level signals (Caden)
 - [✅] M5.T13 — Revisit problem framing: evaluate whether grade classification (B/BB/BBB/A) outperforms ESG score regression given the confirmed bimodal structure (Caden)
 - [ ] M5.T14 — Analyze EU vs. US company ESG score distributions to test mandatory-reporting hypothesis as driver of bimodality (X)
+- [ ] M5.T15 — Integrate extraction_quality.csv flag into modeling pipeline: filter or down-weight the 9 critical bad-extraction companies (COST, AKTS, NTAP, ACNB, DXCM, EBAY, TER, AOS, LOW) and assess impact on R² (Caden)
+- [ ] M5.T16 — Run feature combination ablation experiment (cell added to Feature_Extraction_and_Modeling.ipynb) and record results; identify optimal feature subset (FinBERT only / structured only / combined) (Caden)
 
 ### Milestone 6: Final Model Validated, Evaluation, Explainability Framework
 - [ ] M6.T1 — Validate final model on holdout test set and report all evaluation metrics (X)
@@ -92,6 +94,14 @@
 - (Team) 🆕 M5.T6 — Added task to raise FinBERT sentence cap; EDA confirmed floor effect for Social/Governance features (68-79% hit cap).
 - (Team) 🆕 M5.T7 — Added task to apply class weighting to grade classifier; BBB class is 52% of dataset causing prediction bias.
 - (Caden) 🔄 M5.T1 — Updated scope: added Lasso/ElasticNet with LassoCV and industry-relative residual target formulation based on baseline model analysis showing R² ceiling with current approach.
+
+### 2026-04-10
+- (Caden) 🔄 M5.T12 — Attempted employee count from EDGAR DEI namespace; coverage 1/332, reverted. Using log_total_assets as size proxy.
+- (Caden) 🔄 M5.T12 — Reduced Step 7.6 structured features from 9 → 5 to limit multicollinearity (dropped log_total_revenue, log_stockholders_equity, log_cash_and_equivalents, log_long_term_debt). Feature matrix: 112 → 108.
+- (Caden) 🆕 M5.T15 — Added task: integrate bad extraction flag into modeling pipeline; 9 critical companies identified (XBRL contamination or TOC-stub MDA).
+- (Caden) 🆕 M5.T16 — Added task: run feature combination ablation (FinBERT only / Structured only / Industry+Structured / FinBERT+Industry / Full); cell added to Feature_Extraction_and_Modeling.ipynb.
+- (Caden) 🆕 — Created work/EDA_Structured_Features.ipynb: company size (log_total_assets) vs ESG score scatter plots, quartile box plots, and bimodal threshold analysis.
+- (Caden) 🆕 — Added 10-K extraction quality audit to EDA_10-K_filings.ipynb: cap-hit analysis, duplicate sentence rates, XBRL contamination detection, spot-check previews, bad extraction flag saved to data/structured_features/extraction_quality.csv.
 
 ### 2026-04-05
 - (Caden) ✅ M5.T12 — Built SEC EDGAR Company Facts pipeline: fetched FY2021 fundamentals for all 332 companies (0 failures), saved to data/structured_features/sec_fundamentals.csv. 9 features merged into Feature_Extraction_and_Modeling.ipynb Step 7.6 with industry-median imputation. Feature matrix: 103 → 112 features.

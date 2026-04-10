@@ -1,5 +1,59 @@
 # WORKLOG.md
 
+## 2026-04-10 — Multicollinearity Reduction, EDA Structured Features, Feature Ablation, Extraction Quality Audit (Caden)
+
+**Context**: Following the 04-05 structured features integration, today focused on four threads: (1) tightening the structured feature set to reduce multicollinearity, (2) building EDA to visualise the company size hypothesis, (3) adding a feature combination ablation experiment, and (4) auditing the 10-K extraction pipeline for data quality issues that may be corrupting FinBERT features.
+
+**Work Completed**:
+
+*Company Size Feature — Employee Count Attempt*
+- Attempted to add `EntityNumberOfEmployees` from the SEC EDGAR DEI namespace as a direct company size proxy.
+- Coverage was 1/332 companies (effectively zero) — DEI employee count is not reliably XBRL-tagged in annual 10-K filings. Reverted all changes to `structured_features_collection.ipynb`.
+- Settled on `log_total_assets` as the primary size proxy (99% coverage, canonical balance-sheet scale measure).
+
+*Multicollinearity Reduction — `Feature_Extraction_and_Modeling.ipynb` Step 7.6*
+- Reduced `STRUCTURED_COLS` from 9 → 5 features to limit multicollinearity among the log-transformed size variables.
+- **Dropped**: `log_total_revenue`, `log_stockholders_equity`, `log_cash_and_equivalents`, `log_long_term_debt` (all highly correlated with `log_total_assets`; `log_long_term_debt` also has 51% missingness).
+- **Kept**: `log_total_assets` (size), `log_public_float` (market-cap proxy, not fully redundant with assets), `debt_to_assets`, `profit_margin`, `return_on_equity` (ratios — orthogonal to scale).
+- Feature matrix: 112 → 108 features.
+
+*EDA Structured Features — `work/EDA_Structured_Features.ipynb`* (new notebook)
+- Created new notebook to directly visualise the company size hypothesis.
+- Plot 1: 2x2 scatter plots — ESG score (x) vs `log_total_assets` (y) per pillar, with regression line and Pearson r/p-value annotated.
+- Plot 2: Score distribution by size quartile (Q1-Q4) — box plots per pillar with group means overlaid; prints mean score table per quartile.
+- Plot 3: Bimodal threshold analysis — box + strip plots comparing `log_total_assets` for companies above/below the 500 environment score threshold, with Mann-Whitney U test.
+- Considered a two-model approach (separate models for each bimodal peak, analogous to a hardcoded first decision tree split on size) but decided against it — the size breakdown did not show a clean enough separation to justify the added complexity.
+
+*Feature Combination Ablation — `Feature_Extraction_and_Modeling.ipynb`*
+- Added a new section at the bottom of the modeling notebook running 5-fold CV XGBoost R2 for all four ESG targets across five feature combinations: FinBERT only, Structured only, Industry + Structured (no text), FinBERT + Industry (no structured), and Full (current 108 features).
+- Results displayed as a live progress log + pivot table + RdYlGn heatmap. Cell is ready to run; results to be recorded in next session.
+
+*10-K Extraction Quality Audit — `work/EDA_10-K_filings.ipynb`*
+- Added three new sections at the bottom of the EDA notebook:
+  1. **Audit cell**: scans all 344 extracted section files for 500k cap hits, XBRL contamination, and duplicate sentence rates. Outputs summary statistics + two plots (section length bar charts with cap line; duplicate rate histogram + worst-offender bar chart).
+  2. **Spot-check cell**: for all 21 cap-hit modeling companies, prints a summary table (lengths + issue flags) and 400-char text preview of each section — allows direct visual classification of real prose vs. broken extraction.
+  3. **Bad extraction flag cell**: saves `data/structured_features/extraction_quality.csv` with severity flag (0 = clean, 1 = borderline, 2 = critical) for all 332 modeling companies.
+
+*Key Extraction Audit Findings*
+- 30 sections across 21 modeling companies hit the 500k character cap.
+- **9 critical extractions**: COST and AKTS (XBRL markup extracted instead of text); ACNB, DXCM, EBAY, TER, AOS (2-section cap + ~162-char TOC-stub MDA — extractor lost position in filing after hitting cap twice); LOW (2-section cap + 11.6% duplicate sentence rate).
+- **2 borderline**: ARE (business section only 3,233 chars — likely missed section start); STX (business section hit cap, unusual pattern).
+- **321 clean** (96.7% of modeling set). Mean duplicate sentence rate across all filings: 1.54%.
+- COST is the most severe: FinBERT ran over base64-encoded XBRL financial data tags rather than narrative text — all sentiment features for COST are meaningless.
+
+**Domain Note**: 2020 ESG methodology change — raters switched from giving companies benefit of the doubt on unreported metrics to assigning 0s for unreported data. This is a strong candidate explanation for the bimodal distribution: the methodology change structurally deflates scores for companies that do not report comprehensively, pushing partial reporters into the lower mode.
+
+**Files Created**:
+- `work/EDA_Structured_Features.ipynb` (company size vs ESG score visualisations)
+- `data/structured_features/extraction_quality.csv` (bad extraction flag — generated when audit cell is run)
+
+**Files Modified**:
+- `work/structured_features_collection.ipynb` (reverted employee count addition)
+- `work/Feature_Extraction_and_Modeling.ipynb` (Step 7.6 reduced to 5 features; feature combination ablation section added)
+- `work/EDA_10-K_filings.ipynb` (extraction audit, cap-hit spot-check, and bad extraction flag sections added)
+
+**Next Steps**: Run feature combination ablation and record results. Integrate `extraction_quality.csv` into the modeling pipeline — filter or flag the 9 critical companies and assess impact on R2. Consider re-extracting broken filings from source or raising the 500k cap. Potentially explore EU or pre 2020 ESG scores to test hypothesis on a lack of reporting leading to bimodality.
+
 ## 2026-04-05 — Bimodality Research, SEC EDGAR Structured Features Pipeline (Caden)
 
 **Context**: Following the 03-27 feedback response, two threads were pursued: (1) deeper domain research into the causes of the bimodal ESG score distribution to inform modeling decisions, and (2) implementing the structured company-level features identified in M5.T12 using the SEC EDGAR Company Facts API.
