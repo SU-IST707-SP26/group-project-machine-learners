@@ -29,7 +29,7 @@
 - [✅] M4.T6 — Complete and submit checkpoint/submission.ipynb with all rubric sections (Team)
 
 ### Milestone 5: Multiple Models Trained/Compared and Best Model Identified
-- [⏳] M5.T1 — Train additional models: Lasso/ElasticNet with LassoCV, Gradient Boosting; reframe target as industry-relative residuals (Team)
+- [⏳] M5.T1 — Train additional models: Lasso/ElasticNet with LassoCV, Gradient Boosting; reframe target as industry-relative residuals (Team) — LassoCV and ElasticNetCV added to Step 8, results pending notebook run
 - [ ] M5.T2 — Tune hyperparameters on top performing models (X)
 - [ ] M5.T3 — Compare models using consistent evaluation metrics (RMSE, R², F1) (X)
 - [⏳] M5.T4 — Apply SHAP values to best model for explainability analysis — threshold SHAP analysis complete for environment score (X)
@@ -42,9 +42,9 @@
 - [✅] M5.T11 — Evaluate sentence count columns (E/S/G_sentence_count) as features; ablation test and SHAP importance check (Caden)
 - [✅] M5.T12 — Investigate non-semantic features as supplements to FinBERT: market cap, revenue, employee count, and other structured company-level signals (Caden)
 - [✅] M5.T13 — Revisit problem framing: evaluate whether grade classification (B/BB/BBB/A) outperforms ESG score regression given the confirmed bimodal structure (Caden)
-- [ ] M5.T14 — Analyze EU vs. US company ESG score distributions to test mandatory-reporting hypothesis as driver of bimodality (X)
-- [ ] M5.T15 — Integrate extraction_quality.csv flag into modeling pipeline: filter or down-weight the 9 critical bad-extraction companies (COST, AKTS, NTAP, ACNB, DXCM, EBAY, TER, AOS, LOW) and assess impact on R² (Caden)
-- [ ] M5.T16 — Run feature combination ablation experiment (cell added to Feature_Extraction_and_Modeling.ipynb) and record results; identify optimal feature subset (FinBERT only / structured only / combined) (Caden)
+- [❌] M5.T14 — Analyze EU vs. US company ESG score distributions to test mandatory-reporting hypothesis as driver of bimodality (Ethan) — closed, no compatible external dataset available; disclosure threshold analysis in Step 7.8 pursues this directly
+- [⏳] M5.T15 — Integrate extraction_quality.csv flag into modeling pipeline: filter or down-weight the 9 critical bad-extraction companies (COST, AKTS, NTAP, ACNB, DXCM, EBAY, TER, AOS, LOW) and assess impact on R² (Caden/Ethan) — cell added in Step 7.7, results pending notebook run
+- [✅] M5.T16 — Run feature combination ablation experiment (cell added to Feature_Extraction_and_Modeling.ipynb) and record results; identify optimal feature subset (FinBERT only / structured only / combined) (Caden/Ethan)
 
 ### Milestone 6: Final Model Validated, Evaluation, Explainability Framework
 - [ ] M6.T1 — Validate final model on holdout test set and report all evaluation metrics (X)
@@ -116,3 +116,10 @@
 - (Caden) ✅ M5.T11 — Added sentence count analysis to Feature_Extraction_and_Modeling.ipynb: confirmed E/S/G_sentence_count in feature set, plotted cap-at-100 distributions, correlation heatmap vs ESG scores, SHAP importance ranking, and 5-fold CV ablation (with vs. without sentence counts).
 - (Caden) 🆕 M5.T12 — Added task to investigate non-semantic structured features (market cap, revenue, etc.) as supplements to FinBERT features.
 - (Caden) 🆕 M5.T13 — Added task to revisit classification vs. regression framing given confirmed bimodal grade structure.
+
+### 2026-04-11
+- (Ethan) 🆕 — Added Step 7.7 to Feature_Extraction_and_Modeling.ipynb: extraction quality filter removes 9 critical bad-extraction companies (332 → 323). Implements M5.T15.
+- (Ethan) 🆕 — Added Step 7.8 to Feature_Extraction_and_Modeling.ipynb: disclosure threshold analysis using decision tree (depth=3 and depth=5) to reverse-engineer the rating algorithm's bimodal decision rule for environment score.
+- (Ethan) 🔄 M5.T1 — Expanded `train_and_evaluate` in Step 8 to include LassoCV and ElasticNetCV alongside Ridge and XGBoost. Four-model comparison table with automatic alpha/l1_ratio selection and non-zero feature counts.
+- (Ethan) ✅ M5.T16 — Documented feature combination ablation results in markdown cell below heatmap with interpretation of all 5×4 combinations.
+- (Ethan) ❌ M5.T14 — Searched Kaggle and open data sources for pre-2020 ESG dataset to test methodology change hypothesis; no compatible dataset found (different providers, scales, or insufficient non-US companies). Closed in favor of disclosure threshold analysis in Step 7.8.

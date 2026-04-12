@@ -1,5 +1,46 @@
 # WORKLOG.md
 
+## 2026-04-11 — Extraction Quality Filter, Lasso/ElasticNet Models, Ablation Documentation, Disclosure Threshold Analysis (Ethan)
+
+**Context**: Following the 04-10 extraction audit and feature ablation, today focused on four threads: (1) integrating the bad extraction flag into the modeling pipeline, (2) adding Lasso and ElasticNet models to the model comparison, (3) documenting the ablation results, and (4) building a disclosure threshold analysis to reverse-engineer the rating algorithm's decision rule driving bimodality.
+
+**Work Completed**:
+
+*Extraction Quality Filter — `Feature_Extraction_and_Modeling.ipynb` Step 7.7*
+- Added Step 7.7 after the structured features merge (Step 7.6) to load `extraction_quality.csv` and remove 9 critical bad-extraction companies (COST, AKTS, NTAP, ACNB, DXCM, EBAY, TER, AOS, LOW).
+- 2 borderline companies (ARE, STX) retained — features degraded but not fully corrupted.
+- Modeling dataset: 332 → 323 companies. Cell is in place; results pending next full notebook run.
+
+*Lasso/ElasticNet Models — `Feature_Extraction_and_Modeling.ipynb` Step 8*
+- Replaced the `train_and_evaluate` function to include four models: Ridge, LassoCV, ElasticNetCV, and XGBoost.
+- LassoCV tests 100 alpha values with 5-fold CV for automatic regularisation selection; L1 penalty performs automatic feature selection by driving weak features to exactly zero.
+- ElasticNetCV searches over both alpha and l1_ratio (7 values: 0.1–0.99) to find the optimal L1/L2 blend.
+- Results table now prints all four models with test R², MAE, 5-CV R², plus Lasso/ElasticNet-specific details (selected alpha, l1_ratio, number of non-zero features).
+- Results pending next full notebook run.
+
+*Ablation Results Documentation — `Feature_Extraction_and_Modeling.ipynb`*
+- Added markdown interpretation cell below the feature combination ablation heatmap documenting the 5×4 ablation results from the 04-10 session.
+- Key findings documented: FinBERT alone is negative across all targets; 5 structured features outperform 65 FinBERT features for environment; Full combination is the only positive result for social (+0.049); governance is negative in every combination.
+
+*Disclosure Threshold Analysis — `Feature_Extraction_and_Modeling.ipynb` Step 7.8*
+- Added Step 7.8 after extraction quality filter to reverse-engineer the rating algorithm's disclosure threshold driving the bimodal environment score distribution.
+- Hypothesis: the bimodality across all four score distributions is driven by the rating provider's treatment of disclosure (binary reported vs. not reported) rather than genuine ESG performance differences, amplified by the 2020 methodology change assigning zeros for unreported metrics.
+- Approach: shallow decision tree (depth=3) classifies companies as above/below 500 environment score using the full engineered feature set. Tree splits reveal the feature thresholds separating the two modes.
+- Also fits a deeper tree (depth=5) for comparison, prints classification reports, and extracts specific threshold values from tree nodes.
+- Results pending next full notebook run.
+
+*Pre-2020 ESG Data Search*
+- Searched Kaggle and open data sources for a pre-2020 ESG dataset from the same or comparable rating provider to test the 2020 methodology change hypothesis.
+- No feasible dataset found: Tunguz's Kaggle ESG dataset is country-level (World Bank), not company-level; S&P 500 ESG Risk Ratings uses Sustainalytics (different methodology and scale); FTSE Russell dataset (GitHub) covers 2014–2018 but uses a 0–5 scale incompatible with our 0–1000 scoring.
+- Current dataset is almost entirely US companies (691/709 USD-denominated), limiting any EU vs US comparison to ~18 companies — too few for statistical conclusions.
+- Concluded that the bimodality is most likely an artifact of the rating provider's disclosure threshold (binary reported vs. not reported) rather than a temporal methodology shift that could be tested with external data. The disclosure threshold analysis (Step 7.8) pursues this explanation directly using existing features.
+- M5.T14 closed — insufficient external data available to test the mandatory-reporting hypothesis.
+
+**Files Modified**:
+- `work/Feature_Extraction_and_Modeling.ipynb` (Step 7.7 extraction filter added; Step 7.8 disclosure threshold analysis added; Step 8 `train_and_evaluate` expanded with Lasso/ElasticNet; ablation results markdown added)
+
+**Next Steps**: Run full notebook to record results from Steps 7.7, 7.8, 8, and 11 with the filtered 323-company dataset. If disclosure threshold tree achieves high accuracy, consider adding a binary disclosure feature to the model. Raise FinBERT sentence cap to 300+ and re-run feature extraction (M5.T6). Tune and compare top models (M5.T2, M5.T3).
+
 ## 2026-04-10 — Multicollinearity Reduction, EDA Structured Features, Feature Ablation, Extraction Quality Audit (Caden)
 
 **Context**: Following the 04-05 structured features integration, today focused on four threads: (1) tightening the structured feature set to reduce multicollinearity, (2) building EDA to visualise the company size hypothesis, (3) adding a feature combination ablation experiment, and (4) auditing the 10-K extraction pipeline for data quality issues that may be corrupting FinBERT features.
