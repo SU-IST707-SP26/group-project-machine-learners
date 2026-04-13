@@ -123,3 +123,9 @@
 - (Ethan) 🔄 M5.T1 — Expanded `train_and_evaluate` in Step 8 to include LassoCV and ElasticNetCV alongside Ridge and XGBoost. Four-model comparison table with automatic alpha/l1_ratio selection and non-zero feature counts.
 - (Ethan) ✅ M5.T16 — Documented feature combination ablation results in markdown cell below heatmap with interpretation of all 5×4 combinations.
 - (Ethan) ❌ M5.T14 — Searched Kaggle and open data sources for pre-2020 ESG dataset to test methodology change hypothesis; no compatible dataset found (different providers, scales, or insufficient non-US companies). Closed in favor of disclosure threshold analysis in Step 7.8.
+
+- ### 2026-04-13
+- (John) ✅ M5.T3 — Built unified model comparison notebook: trained Ridge, Lasso, ElasticNet, XGBoost across all four ESG targets with consistent 80/20 split and 5-fold CV. Produced heatmap, bar chart, and scatter plot visualizations. Results saved to data/finbert_features/model_comparison_results.csv.
+- (John) ✅ M5.T5 — Implemented score_to_grade() conversion function using empirical grade boundaries derived from dataset. Evaluated conversion accuracy with confusion matrix and per-grade accuracy breakdown.
+- (John) ✅ M5.T7 — Implemented class-weighted Logistic Regression and XGBoost classifier to address BBB class imbalance (~52% of dataset). Used StratifiedKFold and compute_sample_weight('balanced'). Per-class F1 improved for minority grades.
+- (John) 🆕 M5.T2 — Added hyperparameter tuning notebook: RandomizedSearchCV over 40 iterations × 5-fold CV for XGBoost; RidgeCV over 50 alpha values. Best params saved to data/finbert_features/best_xgboost_params.csv.
