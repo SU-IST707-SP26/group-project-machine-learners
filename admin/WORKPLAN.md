@@ -32,7 +32,7 @@
 - [⏳] M5.T1 — Train additional models: Lasso/ElasticNet with LassoCV, Gradient Boosting; reframe target as industry-relative residuals (Team) — LassoCV and ElasticNetCV added to Step 8, results pending notebook run
 - [✅] M5.T2 — Tune hyperparameters on top performing models (John)
 - [✅] M5.T3 — Compare models using consistent evaluation metrics (RMSE, R², F1) (John)
-- [⏳] M5.T4 — Apply SHAP values to best model for explainability analysis — threshold SHAP analysis complete for environment score (X)
+- [✅] M5.T4 — Apply SHAP values to best model for explainability analysis (John)
 - [✅] M5.T5 — Convert predicted scores to letter grades and document final model selection (John)
 - [ ] M5.T6 — Raise FinBERT sentence cap to 300+ for Social/Governance pillars and re-run feature extraction (Ethan)
 - [✅] M5.T7 — Apply class weighting to grade classifier to address BBB class imbalance (John)
@@ -132,3 +132,5 @@
 
 - ### 2026-04-13
 - (John) ✅ M5.T2 — RandomizedSearchCV over 40 iterations × 5-fold CV for XGBoost; RidgeCV over 50 alpha values. Best params saved to data/finbert_features/best_xgboost_params.csv.
+
+- - (John) ✅ M5.T4 — SHAP explainability analysis complete for all four ESG targets using tuned XGBoost. Summary, bar, waterfall, dependence, and industry-level plots produced. Full importance table saved to data/finbert_features/shap_feature_importance_all_targets.csv.
