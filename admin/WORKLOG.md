@@ -1,5 +1,33 @@
 # WORKLOG.md
 
+## 2026-04-13 — Model Comparison, Score-to-Grade Conversion, Class-Weighted Grade Classifier (John)
+
+**Context**: Picking up unassigned Milestone 5 tasks — building a unified model comparison, implementing score-to-grade conversion, and addressing the BBB class imbalance in the grade classifier.
+
+**Work Completed**:
+
+*Model Comparison — `work/model_comparison_and_grade_classifier.ipynb` (M5.T3)*
+- Trained all four models (Ridge, Lasso, ElasticNet, XGBoost) across all four ESG targets (total, environment, social, governance) with consistent 80/20 split and 5-fold CV.
+- Built unified comparison table with Test R², Test MAE, Test RMSE, and 5-CV R² for all model × target combinations.
+- Produced three visualizations: heatmap of Test R² and CV R², grouped bar chart of CV R² by target, and scatter plot of R² vs MAE trade-off per target.
+- Key finding: XGBoost is the best model across all targets; governance remains negative for every model confirming it requires external board/shareholder data.
+
+*Score-to-Grade Conversion — `work/model_comparison_and_grade_classifier.ipynb` (M5.T5)*
+- Derived empirical grade boundaries from minimum total_score per grade in the dataset.
+- Implemented `score_to_grade()` function converting continuous predicted scores to letter grades (B/BB/BBB/A/AA).
+- Evaluated conversion accuracy on XGBoost test predictions with confusion matrix and per-grade accuracy breakdown.
+
+*Class-Weighted Grade Classifier — `work/model_comparison_and_grade_classifier.ipynb` (M5.T7)*
+- Confirmed BBB class dominance (~52% of dataset) causes naive classifiers to predict BBB for everything.
+- Implemented `class_weight='balanced'` Logistic Regression and XGBoost with `compute_sample_weight('balanced')`.
+- Used StratifiedKFold to preserve class proportions across folds.
+- Produced side-by-side confusion matrices and per-class F1 comparison chart showing minority grade recall improvement with class weighting.
+
+**Files Created**:
+- `work/model_comparison_and_grade_classifier.ipynb`
+
+**Next Steps**: Tune hyperparameters on top performing models (M5.T2). Validate final model on holdout test set (M6.T1). Run full SHAP analysis on best model (M6.T2).
+
 ## 2026-04-11 — Extraction Quality Filter, Lasso/ElasticNet Models, Ablation Documentation, Disclosure Threshold Analysis (Ethan)
 
 **Context**: Following the 04-10 extraction audit and feature ablation, today focused on four threads: (1) integrating the bad extraction flag into the modeling pipeline, (2) adding Lasso and ElasticNet models to the model comparison, (3) documenting the ablation results, and (4) building a disclosure threshold analysis to reverse-engineer the rating algorithm's decision rule driving bimodality.
