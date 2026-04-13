@@ -31,11 +31,11 @@
 ### Milestone 5: Multiple Models Trained/Compared and Best Model Identified
 - [⏳] M5.T1 — Train additional models: Lasso/ElasticNet with LassoCV, Gradient Boosting; reframe target as industry-relative residuals (Team) — LassoCV and ElasticNetCV added to Step 8, results pending notebook run
 - [ ] M5.T2 — Tune hyperparameters on top performing models (X)
-- [ ] M5.T3 — Compare models using consistent evaluation metrics (RMSE, R², F1) (X)
+- [✅] M5.T3 — Compare models using consistent evaluation metrics (RMSE, R², F1) (John)
 - [⏳] M5.T4 — Apply SHAP values to best model for explainability analysis — threshold SHAP analysis complete for environment score (X)
-- [ ] M5.T5 — Convert predicted scores to letter grades and document final model selection (X)
+- [✅] M5.T5 — Convert predicted scores to letter grades and document final model selection (John)
 - [ ] M5.T6 — Raise FinBERT sentence cap to 300+ for Social/Governance pillars and re-run feature extraction (Ethan)
-- [ ] M5.T7 — Apply class weighting to grade classifier to address BBB class imbalance (X)
+- [✅] M5.T7 — Apply class weighting to grade classifier to address BBB class imbalance (John)
 - [✅] M5.T8 — Investigate within-industry bimodality of environment score distribution; check whether grade distribution is also bimodal within industries (Caden)
 - [✅] M5.T9 — SHAP-based threshold analysis: identify features that discriminate companies just below vs. at/above the 500 environment score boundary (Caden)
 - [✅] M5.T10 — UMAP visualization of FinBERT feature space; compare against PCA for non-linear cluster structure; colour by grade and industry (Caden)
