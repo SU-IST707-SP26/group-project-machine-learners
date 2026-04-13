@@ -1,5 +1,43 @@
 # WORKLOG.md
 
+## 2026-04-13 — SHAP Explainability Analysis (John)
+
+**Context**: Following hyperparameter tuning (M5.T2), applied SHAP values to the tuned XGBoost models across all four ESG targets to identify the features driving predictions (M5.T4).
+
+**Work Completed**:
+
+*SHAP Explainability Analysis — `work/shap_explainability_analysis.ipynb` (M5.T4)*
+- Trained tuned XGBoost models for all four ESG targets using best hyperparameters from `best_xgboost_params.csv`.
+- Computed SHAP values using `shap.TreeExplainer` for all test set companies across all four targets.
+- Produced SHAP summary plots (top 20 features by mean |SHAP| with direction) for all four targets.
+- Produced SHAP bar plots (global feature importance ranking) for all four targets.
+- Built cross-pillar feature importance heatmap comparing mean |SHAP| across all targets — identifies universally important features vs. pillar-specific drivers.
+- Produced waterfall plots for highest and lowest predicted companies on total_score and environment_score — explains individual predictions feature by feature.
+- Produced dependence plots for top 3 features per target showing non-linear relationships and interaction effects.
+- Conducted industry-level SHAP analysis on environment_score — identifies which industries the model engages with most strongly.
+- Full feature importance table saved to `data/finbert_features/shap_feature_importance_all_targets.csv`.
+
+**Key Findings**:
+- Structured features (`log_total_assets`, `log_public_float`) dominate environment score SHAP — company size is the strongest single driver of environment predictions.
+- Industry dummies carry significant SHAP weight across all targets — sector membership is a stronger signal than text sentiment alone.
+- `E_pillar_score` (FinBERT environment sentiment) ranks highest among text-derived features for environment score.
+- Governance SHAP values are diffuse with no single dominant feature — consistent with negative R² and confirms governance requires external board/shareholder data.
+- Social score benefits most from the combination of FinBERT text features and structured financial features.
+
+**Files Created**:
+- `work/shap_explainability_analysis.ipynb`
+
+**Files Generated** (on notebook run):
+- `data/finbert_features/shap_feature_importance_all_targets.csv`
+- `data/finbert_features/shap_summary_*.png` (4 plots)
+- `data/finbert_features/shap_bar_*.png` (4 plots)
+- `data/finbert_features/shap_cross_pillar_heatmap.png`
+- `data/finbert_features/shap_waterfall_*.png`
+- `data/finbert_features/shap_dependence_*.png`
+- `data/finbert_features/shap_industry_analysis.png`
+
+**Next Steps**: Analyze model performance across industries and pillars (M6.T3). Validate final model on holdout test set (M6.T1). Document explainability findings and compare against commercial ESG rating methodology (M6.T4).
+
 ## 2026-04-13 — Hyperparameter Tuning (John)
 
 **Context**: Following model comparison work, implemented hyperparameter tuning for XGBoost and Ridge across all four ESG targets (M5.T2).
