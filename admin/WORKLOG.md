@@ -1,5 +1,28 @@
 # WORKLOG.md
 
+## 2026-04-13 — Hyperparameter Tuning (John)
+
+**Context**: Following model comparison work, implemented hyperparameter tuning for XGBoost and Ridge across all four ESG targets (M5.T2).
+
+**Work Completed**:
+
+*Hyperparameter Tuning — `work/hyperparameter_tuning.ipynb` (M5.T2)*
+- Used `RandomizedSearchCV` with 40 iterations × 5-fold CV to search over 8 XGBoost hyperparameters per target: `n_estimators`, `max_depth`, `learning_rate`, `subsample`, `colsample_bytree`, `reg_lambda`, `reg_alpha`, `min_child_weight`.
+- Used `RidgeCV` over 50 alpha values on a log scale (0.01–1000) for Ridge tuning.
+- Recorded baseline vs tuned performance for all model × target combinations.
+- Produced improvement heatmap, ΔR² bar chart, and CV score distribution plots showing hyperparameter sensitivity per target.
+- Best XGBoost parameters saved to `data/finbert_features/best_xgboost_params.csv` for use in final model training (M6.T1).
+- Key finding: tuning improves environment and total score prediction; governance remains negative after tuning confirming it is a data limitation rather than a modeling problem.
+
+**Files Created**:
+- `work/hyperparameter_tuning.ipynb`
+
+**Files Generated** (on notebook run):
+- `data/finbert_features/hyperparameter_tuning_results.csv`
+- `data/finbert_features/best_xgboost_params.csv`
+
+**Next Steps**: Use best params from `best_xgboost_params.csv` for final model validation (M6.T1). Run full SHAP analysis on tuned best model (M6.T2). Analyze model performance across industries and pillars (M6.T3).
+
 ## 2026-04-13 — Model Comparison, Score-to-Grade Conversion, Class-Weighted Grade Classifier (John)
 
 **Context**: Picking up unassigned Milestone 5 tasks — building a unified model comparison, implementing score-to-grade conversion, and addressing the BBB class imbalance in the grade classifier.
