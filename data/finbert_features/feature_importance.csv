@@ -1,109 +1,109 @@
 feature,importance
-kw_executive_pay_present,0.059481125
-E_pos_std,0.05011447
-log_public_float,0.043793008
-count_emissions_numbers,0.031910036
-log_total_assets,0.028080052
-ind_Technology,0.026453644
-profit_margin,0.023112537
-G_sentence_count,0.02151275
-kw_renewable_energy_freq_log,0.020086428
-kw_climate_risk_freq_log,0.019577779
-kw_carbon_emissions_freq_log,0.018660994
-S_neu_mean,0.018464904
-ind_Retail,0.018166551
-kw_waste_water_freq_log,0.018009037
-risk_factors_length,0.017945213
-E_pos_neg_ratio,0.017630726
-S_sentence_count,0.017545005
-kw_human_rights_freq_log,0.016667495
-kw_executive_pay_freq_log,0.016375396
-business_pct,0.016230706
-E_sentence_count,0.01608867
-kw_community_freq_log,0.01592482
-E_neu_mean,0.0155332405
-E_coverage_pct,0.015462319
-G_coverage_pct,0.014974721
-debt_to_assets,0.014617034
-S_pos_std,0.01445682
-S_neg_std,0.013731805
-mda_pct,0.013340288
-kw_climate_risk_present,0.012691938
-E_pillar_score,0.012256461
-kw_employee_welfare_freq_log,0.012189974
-G_pos_std,0.01191339
-S_neg_mean,0.01190059
-S_pos_mean,0.011659751
-kw_ethics_compliance_freq_log,0.011576394
-ind_Airlines,0.011151106
-S_pillar_score,0.01101944
-kw_board_governance_freq_log,0.010912756
-G_pos_neg_ratio,0.010843359
-G_pillar_score,0.01041799
-G_neg_mean,0.010305725
-count_employee_numbers,0.010268145
-kw_diversity_freq_log,0.010112132
-risk_factors_pct,0.010096215
-kw_waste_water_present,0.009708193
-S_coverage_pct,0.00968965
-ind_Electrical Equipment,0.00957854
-business_length,0.009356067
-G_neu_mean,0.00913478
-G_pos_mean,0.009092778
-E_pos_mean,0.009039151
-G_neg_std,0.009031042
-S_pos_neg_ratio,0.0088493405
-kw_regulatory_penalties_freq_log,0.008819291
-return_on_equity,0.008652625
-doc_length,0.008036047
-mda_length,0.007911466
-E_neg_std,0.0075091613
-kw_controversy_freq_log,0.007310022
-E_neg_mean,0.006869536
-kw_transparency_freq_log,0.0065396903
-ind_Building,0.005522515
-has_employee_numbers,0.0054504625
-has_sustainability_mention,0.0054412633
-kw_carbon_emissions_present,0.004250034
-kw_controversy_present,0.0042473576
-kw_community_present,0.0037947963
-ind_Media,0.0028951252
-kw_renewable_energy_present,0.0024376507
-ind_Pharmaceuticals,0.0017376048
-kw_human_rights_present,0.0016382489
-ind_Semiconductors,0.0015629325
-has_emissions_numbers,0.0013846749
-ind_Biotechnology,0.0012470688
+kw_executive_pay_present,0.07654762
+log_total_assets,0.037206955
+log_public_float,0.03448147
+ind_Technology,0.033205703
+kw_climate_risk_freq_log,0.032344628
+has_employee_numbers,0.026226707
+E_coverage_pct,0.025507223
+S_neg_std,0.023629561
+S_pos_std,0.023595698
+kw_carbon_emissions_freq_log,0.023194514
+E_sentence_count,0.021277588
+debt_to_assets,0.020687986
+kw_human_rights_freq_log,0.020020183
+E_pos_std,0.019969398
+kw_climate_risk_present,0.018237023
+count_emissions_numbers,0.01701516
+profit_margin,0.016851682
+kw_executive_pay_freq_log,0.01678442
+kw_waste_water_freq_log,0.016744878
+ind_Machinery,0.016516598
+S_pos_neg_ratio,0.015116145
+kw_board_governance_freq_log,0.015111265
+risk_factors_pct,0.014796445
+business_length,0.014685681
+S_sentence_count,0.014537103
+S_neg_mean,0.014534113
+kw_ethics_compliance_freq_log,0.013969833
+G_neu_mean,0.013815099
+E_pos_neg_ratio,0.013810577
+kw_controversy_freq_log,0.013339315
+kw_transparency_freq_log,0.013146632
+S_neu_mean,0.012990719
+G_coverage_pct,0.012824596
+kw_community_freq_log,0.012669817
+business_pct,0.012588185
+count_employee_numbers,0.01253766
+G_pos_std,0.012438626
+G_neg_std,0.012392202
+doc_length,0.012391588
+E_pillar_score,0.012235522
+S_pillar_score,0.012078173
+kw_renewable_energy_freq_log,0.011407188
+G_pillar_score,0.011247371
+risk_factors_length,0.011163881
+kw_employee_welfare_freq_log,0.010335705
+G_pos_mean,0.01000113
+kw_regulatory_penalties_freq_log,0.009137104
+G_sentence_count,0.009041812
+G_neg_mean,0.0088176
+ind_Automobiles,0.008602966
+ind_Electrical Equipment,0.00834253
+E_neg_std,0.008146409
+mda_length,0.0080500115
+mda_pct,0.008044191
+kw_diversity_freq_log,0.007902961
+E_neu_mean,0.007872809
+S_pos_mean,0.007853294
+G_pos_neg_ratio,0.007606029
+E_neg_mean,0.007306615
+E_pos_mean,0.00687047
+S_coverage_pct,0.00678195
+return_on_equity,0.006509721
+has_sustainability_mention,0.003744891
+kw_community_present,0.0036690522
+kw_waste_water_present,0.0036530932
+ind_Chemicals,0.003193834
+ind_Media,0.0021463493
+kw_controversy_present,0.00049672223
+has_emissions_numbers,0.0
+kw_human_rights_present,0.0
+kw_renewable_energy_present,0.0
+kw_carbon_emissions_present,0.0
 count_dollar_fines,0.0
+has_dollar_fines,0.0
+has_percent_renewable,0.0
+count_percent_renewable,0.0
 ind_Communications,0.0
 ind_Commercial Services and Supplies,0.0
-ind_Chemicals,0.0
-ind_Beverages,0.0
-ind_Automobiles,0.0
+ind_Building,0.0
+ind_Biotechnology,0.0
 ind_Banking,0.0
-ind_Aerospace and Defense,0.0
+ind_Beverages,0.0
+ind_Airlines,0.0
 ind_Auto Components,0.0
-count_percent_renewable,0.0
-has_percent_renewable,0.0
-has_dollar_fines,0.0
-ind_Consumer products,0.0
+ind_Aerospace and Defense,0.0
+ind_Food Products,0.0
+ind_Health Care,0.0
+ind_Construction,0.0
 ind_Energy,0.0
 ind_Financial Services,0.0
-ind_Food Products,0.0
-ind_Construction,0.0
+ind_Consumer products,0.0
+ind_Distributors,0.0
 ind_Packaging,0.0
 ind_Metals and Mining,0.0
-ind_Machinery,0.0
+ind_Life Sciences Tools and Services,0.0
 ind_Logistics and Transportation,0.0
 ind_Insurance,0.0
-ind_Life Sciences Tools and Services,0.0
 ind_Hotels Restaurants and Leisure,0.0
-ind_Health Care,0.0
-ind_Distributors,0.0
-ind_Road and Rail,0.0
-ind_Professional Services,0.0
 ind_Real Estate,0.0
+ind_Pharmaceuticals,0.0
 ind_Telecommunication,0.0
+ind_Semiconductors,0.0
+ind_Road and Rail,0.0
+ind_Retail,0.0
+ind_Professional Services,0.0
 ind_Utilities,0.0
 ind_Textiles Apparel and Luxury Goods,0.0
 ind_Tobacco,0.0

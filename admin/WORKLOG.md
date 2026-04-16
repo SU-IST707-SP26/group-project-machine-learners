@@ -1,5 +1,64 @@
 # WORKLOG.md
 
+## 2026-04-16 — Final Model Validation: ElasticNet First Look (Caden)
+
+**Context**: With all Milestone 5 modeling work complete, moved into Milestone 6. Ran `Feature_Extraction_and_Modeling.ipynb` to record pending results from Ethan's Steps 7.7/7.8 and the expanded Step 8. Then built and ran a dedicated final model validation notebook using ElasticNet as the chosen model.
+
+**Work Completed**:
+
+*Feature_Extraction_and_Modeling.ipynb — Full Run (M5.T1, M5.T15)*
+- Ran full notebook with the 323-company filtered dataset (Steps 7.7, 7.8, and 8 now have recorded outputs).
+- Step 7.7 extraction quality filter confirmed: 9 critical companies removed, 332 → 323.
+- Step 7.8 disclosure threshold decision tree ran on the filtered dataset.
+- Step 8 four-model comparison (Ridge, LassoCV, ElasticNetCV, XGBoost) on total_score with 323 companies:
+  - ElasticNet: Test R² = +0.065, CV R² = 0.194, alpha=14.13, l1_ratio=0.99, 28 non-zero features
+  - Lasso: Test R² = +0.031, CV R² = 0.186
+  - XGBoost: Test R² = +0.046, CV R² = 0.084
+  - Ridge: Test R² = −0.326, CV R² = −0.025
+- Key finding: ElasticNet and Lasso significantly outperform XGBoost in CV R² — the dataset has a sparse signal structure that benefits from L1 regularization.
+
+*Model Selection Decision*
+- Cross-referencing with John's model_comparison_and_grade_classifier.ipynb (332-company dataset), ElasticNet wins on CV R² across all four targets: total (+0.128), environment (+0.151), social (+0.101), governance (−0.006).
+- **ElasticNet selected as the final model** over XGBoost. ElasticNetCV already performs automatic alpha/l1_ratio selection internally — no separate tuning needed.
+- Decision not to raise FinBERT sentence cap (M5.T6) or perform additional ElasticNet tuning before M6 — governance is structurally limited regardless, and ElasticNetCV is already optimized.
+
+*Final Model Validation — `work/final_model_validation.ipynb` (M6.T1, M6.T2, M6.T3)*
+- Built new notebook replicating the full feature engineering pipeline (Steps 7.5–7.7) cleanly, then training ElasticNetCV on all four ESG targets.
+- Features scaled with StandardScaler before fitting (ElasticNet is scale-sensitive).
+- Holdout test results (323 companies, 108 features, 80/20 split):
+
+| Target | Test R² | MAE | RMSE | Non-zero Features |
+|--------|---------|-----|------|-------------------|
+| total_score | +0.065 | 145.66 | 172.56 | 27 |
+| environment_score | +0.078 | 104.10 | 116.25 | 30 |
+| social_score | **+0.173** | 31.45 | 40.34 | 31 |
+| governance_score | ~0.000 | 36.33 | 42.94 | **0** |
+
+- Social score is the best single-target result in the project (Test R² = 0.173).
+- Governance: ElasticNet selected 0 non-zero features (alpha=74.10) — the model explicitly found no learnable signal. Definitively confirms governance requires external data (board composition, shareholder structure, voting records).
+- l1_ratio 0.95–0.99 across predictable targets confirms near-pure Lasso is optimal — sparse signal structure.
+- Coefficient plots, cross-target shared feature heatmap, industry R² heatmap, residual plots, and grade confusion matrix produced.
+- Metrics saved to `data/finbert_features/final_model_metrics.csv`.
+- Industry performance saved to `data/finbert_features/final_model_industry_performance.csv`.
+
+**This is a first look at the final model — room for improvement remains.**
+
+**Files Created**:
+- `work/final_model_validation.ipynb`
+
+**Files Generated** (on notebook run):
+- `data/finbert_features/final_model_metrics.csv`
+- `data/finbert_features/final_model_industry_performance.csv`
+- `data/finbert_features/final_model_r2_bar.png`
+- `data/finbert_features/final_model_coefficients.png`
+- `data/finbert_features/final_model_shared_features_heatmap.png`
+- `data/finbert_features/final_model_industry_heatmap.png`
+- `data/finbert_features/final_model_industry_total_bar.png`
+- `data/finbert_features/final_model_residuals.png`
+- `data/finbert_features/final_model_grade_confusion.png`
+
+**Next Steps**: Two feature improvements identified before treating this as truly final — (1) add section-presence binary features from 10-K filings (did Business / Risk Factors / MD&A section exist? section length buckets?) as lightweight structural signals; (2) raise FinBERT sentence cap from 100 → 300+ and re-run feature extraction to reduce the S/G sentence floor effect (M5.T6). After feature improvements, re-run final_model_validation.ipynb. Then complete M6.T4 (explainability documentation) and Milestone 7.
+
 ## 2026-04-13 — SHAP Explainability Analysis (John)
 
 **Context**: Following hyperparameter tuning (M5.T2), applied SHAP values to the tuned XGBoost models across all four ESG targets to identify the features driving predictions (M5.T4).

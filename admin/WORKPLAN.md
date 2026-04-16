@@ -29,12 +29,12 @@
 - [✅] M4.T6 — Complete and submit checkpoint/submission.ipynb with all rubric sections (Team)
 
 ### Milestone 5: Multiple Models Trained/Compared and Best Model Identified
-- [⏳] M5.T1 — Train additional models: Lasso/ElasticNet with LassoCV, Gradient Boosting; reframe target as industry-relative residuals (Team) — LassoCV and ElasticNetCV added to Step 8, results pending notebook run
+- [✅] M5.T1 — Train additional models: Lasso/ElasticNet with LassoCV, Gradient Boosting; reframe target as industry-relative residuals (Team) — LassoCV/ElasticNetCV results recorded; ElasticNet selected as best model (CV R² beats XGBoost across all targets)
 - [✅] M5.T2 — Tune hyperparameters on top performing models (John)
 - [✅] M5.T3 — Compare models using consistent evaluation metrics (RMSE, R², F1) (John)
 - [✅] M5.T4 — Apply SHAP values to best model for explainability analysis (John)
 - [✅] M5.T5 — Convert predicted scores to letter grades and document final model selection (John)
-- [ ] M5.T6 — Raise FinBERT sentence cap to 300+ for Social/Governance pillars and re-run feature extraction (Ethan)
+- [⏳] M5.T6 — Raise FinBERT sentence cap to 300+ for Social/Governance pillars and re-run feature extraction (Ethan) — deferred; identified as a potential improvement before finalizing the model
 - [✅] M5.T7 — Apply class weighting to grade classifier to address BBB class imbalance (John)
 - [✅] M5.T8 — Investigate within-industry bimodality of environment score distribution; check whether grade distribution is also bimodal within industries (Caden)
 - [✅] M5.T9 — SHAP-based threshold analysis: identify features that discriminate companies just below vs. at/above the 500 environment score boundary (Caden)
@@ -43,14 +43,16 @@
 - [✅] M5.T12 — Investigate non-semantic features as supplements to FinBERT: market cap, revenue, employee count, and other structured company-level signals (Caden)
 - [✅] M5.T13 — Revisit problem framing: evaluate whether grade classification (B/BB/BBB/A) outperforms ESG score regression given the confirmed bimodal structure (Caden)
 - [❌] M5.T14 — Analyze EU vs. US company ESG score distributions to test mandatory-reporting hypothesis as driver of bimodality (Ethan) — closed, no compatible external dataset available; disclosure threshold analysis in Step 7.8 pursues this directly
-- [⏳] M5.T15 — Integrate extraction_quality.csv flag into modeling pipeline: filter or down-weight the 9 critical bad-extraction companies (COST, AKTS, NTAP, ACNB, DXCM, EBAY, TER, AOS, LOW) and assess impact on R² (Caden/Ethan) — cell added in Step 7.7, results pending notebook run
+- [✅] M5.T15 — Integrate extraction_quality.csv flag into modeling pipeline: filter or down-weight the 9 critical bad-extraction companies (COST, AKTS, NTAP, ACNB, DXCM, EBAY, TER, AOS, LOW) and assess impact on R² (Caden/Ethan) — confirmed 332 → 323 companies after filter
 - [✅] M5.T16 — Run feature combination ablation experiment (cell added to Feature_Extraction_and_Modeling.ipynb) and record results; identify optimal feature subset (FinBERT only / structured only / combined) (Caden/Ethan)
 
 ### Milestone 6: Final Model Validated, Evaluation, Explainability Framework
-- [ ] M6.T1 — Validate final model on holdout test set and report all evaluation metrics (X)
-- [ ] M6.T2 — Run SHAP analysis and identify top features driving ESG score predictions (X)
-- [ ] M6.T3 — Analyze model performance across industries and ESG pillars (X)
+- [⏳] M6.T1 — Validate final model on holdout test set and report all evaluation metrics (Caden) — first look complete in final_model_validation.ipynb; two feature improvements pending before treating as final: (1) section-presence features, (2) raised sentence cap
+- [⏳] M6.T2 — Coefficient analysis and feature explainability for ElasticNet final model (Caden) — non-zero coefficient plots and shared feature heatmap produced in final_model_validation.ipynb; XGBoost SHAP analysis by John in shap_explainability_analysis.ipynb remains valid as a comparison
+- [⏳] M6.T3 — Analyze model performance across industries and ESG pillars (Caden) — industry R² heatmap and breakdown produced in final_model_validation.ipynb; will update after feature improvements
 - [ ] M6.T4 — Document explainability findings and compare against commercial ESG rating methodology (X)
+- [ ] M6.T5 — Add section-presence binary features from 10-K filings (did each section exist? section length buckets?) as structural signals and evaluate impact on model performance (X)
+- [⏳] M6.T6 — Re-run final_model_validation.ipynb after feature improvements (M5.T6 sentence cap + M6.T5 section features) to produce final holdout metrics (Caden)
 
 ### Milestone 7: Visualizations, Final Report, Presentation
 - [ ] M7.T1 — Build visualizations for model performance, SHAP values, and ESG score distributions (X)
@@ -134,3 +136,13 @@
 - (John) ✅ M5.T2 — RandomizedSearchCV over 40 iterations × 5-fold CV for XGBoost; RidgeCV over 50 alpha values. Best params saved to data/finbert_features/best_xgboost_params.csv.
 
 - - (John) ✅ M5.T4 — SHAP explainability analysis complete for all four ESG targets using tuned XGBoost. Summary, bar, waterfall, dependence, and industry-level plots produced. Full importance table saved to data/finbert_features/shap_feature_importance_all_targets.csv.
+
+
+### 2026-04-16
+- (Caden) ✅ M5.T1 — LassoCV/ElasticNetCV results recorded after full notebook run; ElasticNet selected as final model over XGBoost.
+- (Caden) ✅ M5.T15 — Extraction quality filter confirmed; 332 → 323 companies after removing 9 critical bad-extraction companies.
+- (Caden) ⏳ M6.T1 — First look at final model complete in final_model_validation.ipynb (ElasticNet, 323 companies, 108 features). Social Test R²=0.173, Environment=0.078, Total=0.065, Governance≈0.000 (0 features selected). Two improvements identified before treating as final.
+- (Caden) ⏳ M6.T2 — Coefficient analysis produced; XGBoost SHAP from John remains valid comparison.
+- (Caden) ⏳ M6.T3 — Industry R² heatmap produced; will update after feature improvements.
+- (Caden) 🆕 M6.T5 — Added task: section-presence binary features from 10-K filings as new structural signals.
+- (Caden) 🆕 M6.T6 — Added task: re-run final_model_validation.ipynb after M5.T6 + M6.T5 improvements.

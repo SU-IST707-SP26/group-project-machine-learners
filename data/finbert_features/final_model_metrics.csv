@@ -1,0 +1,5 @@
+,Test R²,Test MAE,Test RMSE,Alpha,L1 Ratio,Non-zero Features
+total_score,0.0648,145.66,172.56,14.1279,0.99,27.0
+environment_score,0.0784,104.1,116.25,9.4409,0.95,30.0
+social_score,0.1726,31.45,40.34,4.2776,0.95,31.0
+governance_score,-0.0003,36.33,42.94,74.0998,0.1,0.0
