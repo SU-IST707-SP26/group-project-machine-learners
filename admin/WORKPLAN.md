@@ -57,7 +57,7 @@
 ### Milestone 7: Visualizations, Final Report, Presentation
 - [ ] M7.T1 — Build visualizations for model performance, SHAP values, and ESG score distributions (X)
 - [ ] M7.T2 — Write final report covering methodology, results, and limitations (X)
-- [ ] M7.T3 — Prepare and deliver final presentation (X)
+- [⏳] M7.T3 — Prepare and deliver Checkpoint 3 presentation (Team) — slide structure planned; drafting in progress, due 4/27
 
 ---
 
@@ -146,3 +146,7 @@
 - (Caden) ⏳ M6.T3 — Industry R² heatmap produced; will update after feature improvements.
 - (Caden) 🆕 M6.T5 — Added task: section-presence binary features from 10-K filings as new structural signals.
 - (Caden) 🆕 M6.T6 — Added task: re-run final_model_validation.ipynb after M5.T6 + M6.T5 improvements.
+
+### 2026-04-19
+- (Ethan) 🆕 M7.T3 — Added Checkpoint 3 presentation task; 8-slide structure planned covering problem, solution, data, initial results (ElasticNet first look), challenges, and plan & goals. Due 4/27.
+- (Ethan) 🔄 M7.T3 — Slide structure and framing decisions documented in worklog. Results slides pending final feature improvements and model re-run before deck is locked.

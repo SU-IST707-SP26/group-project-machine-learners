@@ -1,5 +1,29 @@
 # WORKLOG.md
 
+## 2026-04-19 — Checkpoint 3 Presentation Planning (Ethan)
+
+**Context**: Checkpoint 3 presentation due 4/27. Rubric calls for 7–8 slides covering problem/stakeholder, envisioned solution, data, initial results (1–2 slides), challenges, and plan & goals. Treated as an early draft of final results — modeling is not yet complete (feature improvements and final re-run of `final_model_validation.ipynb` still pending per M6 next steps).
+
+**Work Completed**:
+
+*Slide Structure Planned*
+- Mapped rubric requirements to an 8-slide structure:
+  1. **Title** — team names (Ethan, Caden, John)
+  2. **Problem & Stakeholder** — ESG access gap for retail investors; $40T market locked behind $5K–$30K+ annual subscriptions
+  3. **Envisioned Solution** — free SEC 10-K pipeline → FinBERT features → ElasticNet prediction → SHAP explainability
+  4. **Data** — Kaggle ESG dataset (709 companies, 2022 ratings), SEC EDGAR 10-K filings (332 complete extractions → 323 after quality filter), 108 engineered features across FinBERT sentiment, keyword frequency, document structure, and SEC fundamentals
+  5. **Initial Results (slide 1)** — four-model comparison across all ESG targets; ElasticNet selected (CV R² wins on all four targets); best result social Test R² = 0.173; governance confirmed data-limited (0 non-zero features selected, alpha=74.10)
+  6. **Initial Results (slide 2)** — SHAP findings: company size (`log_total_assets`, `log_public_float`) dominates environment predictions; industry dummies carry significant weight across all targets; governance SHAP diffuse with no dominant feature
+  7. **Challenges** — bimodal score distribution (disclosure threshold artifact, not genuine performance signal); governance structural ceiling requiring external board/shareholder data; 9 critical extraction failures removed from dataset; FinBERT sentence cap floor effect suppressing S/G feature variance
+  8. **Plan & Goals** — two pending feature improvements (section-presence binary features; raise sentence cap 100 → 300+), re-run `final_model_validation.ipynb`, complete M6.T4 explainability documentation, Milestone 7 final report
+
+*Key Framing Decisions*
+- Results framed explicitly as a first look — slide language will reflect that improvements are in progress.
+- Bimodal distribution presented as a methodological insight (disclosure threshold artifact) rather than a plain limitation — reframes what the model is actually predicting.
+- Governance zero-feature result presented as a meaningful finding, not a failure — confirms that 10-K text and financial fundamentals cannot substitute for board/shareholder data.
+
+**Next Steps**: Divide slide drafting across team — Caden takes results slides (owns notebook outputs), John takes SHAP slide (owns that analysis), Ethan drafts remaining slides and assembles final deck. Complete pending feature improvements and final model re-run before locking results slides. Present 4/27.
+
 ## 2026-04-16 — Final Model Validation: ElasticNet First Look (Caden)
 
 **Context**: With all Milestone 5 modeling work complete, moved into Milestone 6. Ran `Feature_Extraction_and_Modeling.ipynb` to record pending results from Ethan's Steps 7.7/7.8 and the expanded Step 8. Then built and ran a dedicated final model validation notebook using ElasticNet as the chosen model.
