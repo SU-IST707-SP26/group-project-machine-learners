@@ -1,5 +1,27 @@
 # WORKLOG.md
 
+## 2026-04-25 — Checkpoint 3 Presentation Assembly (Ethan)
+ 
+**Context**: Checkpoint 3 presentation due 4/27. Assembled and finalized the 8-slide deck based on the planned structure from the 04-19 worklog entry. Results slides built around outputs from `final_model_validation.ipynb`.
+ 
+**Work Completed**:
+ 
+*Presentation Finalized — `presentation/submission.pdf`*
+- Built two Initial Results slides using ElasticNet holdout results from `final_model_validation.ipynb`:
+  - **Slide 5 (ElasticNet Model Evaluation)**: R² bar chart (`final_model_r2_bar.png`) and themed metrics table (Test R², MAE, Score Std, Features Used across all four targets). Three callout bullets covering sparse signal structure, Social as best performer, and governance structural ceiling.
+  - **Slide 6 (ElasticNet Model Findings)**: 2x2 non-zero coefficient chart (`final_model_coefficients.png`) across all four targets. Three callout bullets covering dominant drivers (company size and industry), FinBERT text feature contributions to Social and Environment, and governance empty column as a structural ceiling confirmed by the model.
+- Updated Envisioned Solution slide SHAP bullet to forward-looking language — SHAP explainability not yet run on final ElasticNet model.
+- Updated Plans & Goals roadmap — Final Model Run stop now includes 5-fold CV evaluation per pillar to validate holdout results; Explainability stop updated to refine grade classifier rather than convert scores to grades (conversion already completed in `final_model_validation.ipynb`).
+- Confirmed rubric compliance: 8 slides total, Thank You slide removed to stay within 7–8 slide limit.
+
+*Key Framing Decisions*
+- Governance zero-feature result presented as a structural ceiling confirmed by the model, not a failure — consistent with Challenges slide framing.
+- Results explicitly framed as a first look pending two feature improvements (sentence cap raise, section-presence binary features) and final model re-run.
+- SHAP analysis reserved for final report — coefficient chart used in place of SHAP for slide 6 since ElasticNet SHAP has not yet been run.
+
+**Files Created**:
+- `presentation/submission.pdf`
+
 ## 2026-04-19 — Checkpoint 3 Presentation Planning (Ethan)
 
 **Context**: Checkpoint 3 presentation due 4/27. Rubric calls for 7–8 slides covering problem/stakeholder, envisioned solution, data, initial results (1–2 slides), challenges, and plan & goals. Treated as an early draft of final results — modeling is not yet complete (feature improvements and final re-run of `final_model_validation.ipynb` still pending per M6 next steps).
