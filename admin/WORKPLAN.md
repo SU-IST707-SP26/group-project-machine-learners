@@ -153,3 +153,4 @@
 
 ### 2026-04-25
 - (Ethan) ✅ M7.T3 — Checkpoint 3 presentation complete and submitted as presentation/submission.pdf. 8-slide deck covering problem/stakeholder, envisioned solution, data, initial results (ElasticNet Model Evaluation + ElasticNet Model Findings), challenges, and plan & goals. Results slides built around final_model_validation.ipynb outputs.
+- (Caden) 🆕 — Created work/README.md: structured index of all 11 supporting notebooks organized into Data Collection, EDA, Feature Engineering and Modeling, and Final Model Evaluation sections. Directly addresses final rubric requirement for a notebook index.

@@ -1,5 +1,23 @@
 # WORKLOG.md
 
+## 2026-04-25 — Work Directory Documentation and Repository Cleanup (Caden)
+
+**Context**: Following presentation submission, organized the `work/` directory for the final report submission. The final rubric requires a clear index of all supporting notebooks so the grader can locate analyses without digging through the code.
+
+**Work Completed**:
+
+*Notebook Index — `work/README.md`*
+- Created `work/README.md` as a structured index of all 11 supporting notebooks, organized into four sections: Data Collection, Exploratory Data Analysis, Feature Engineering and Modeling, and Final Model Evaluation.
+- Each entry documents the notebook's purpose, key analysis steps, and any output files it generates.
+- Directly addresses the final rubric requirement: "your final narrative should include an index that tells me exactly what each supporting jupyter notebook does."
+
+**Files Created**:
+- `work/README.md`
+
+**Next Steps**: Begin drafting `final/submission.md` using the notebook index as the Supporting Files section. Re-run `final_model_validation.ipynb` after section-presence features (M6.T5) and sentence cap raise (M5.T6) are implemented (M6.T6).
+
+---
+
 ## 2026-04-25 — Checkpoint 3 Presentation Assembly (Ethan)
  
 **Context**: Checkpoint 3 presentation due 4/27. Assembled and finalized the 8-slide deck based on the planned structure from the 04-19 worklog entry. Results slides built around outputs from `final_model_validation.ipynb`.
