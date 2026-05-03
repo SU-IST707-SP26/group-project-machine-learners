@@ -164,4 +164,4 @@
 - (Caden) ✅ M6.T1 — Final holdout evaluation complete. All four targets now positive on holdout. Social Test R²=+0.215 is the strongest pillar signal.
 - (Caden) ✅ M6.T2 — Coefficient analysis updated in final_model_validation.ipynb for 8 feature groups; mode_prob_high included.
 - (Caden) ✅ M6.T3 — Industry R² heatmap updated with final feature set.
-- (Ethan) ⏳ M7.T2 — Began drafting final/submission.md. Title, Team, Introduction, and Literature Review complete. Remaining sections filled in by Caden in subsequent merge.
+- (Caden/Ethan) ⏳ M7.T2 — Drafted final/submission.md. Ethan: Title, Team, Introduction, Literature Review, footnoted references. Caden: Data and Methods.

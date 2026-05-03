@@ -171,63 +171,17 @@ The l1_ratio of 0.99 across nearly all targets means the signal is near lasso op
 
 ### Feature Importance
 
-The non-zero ElasticNet coefficients (Figure 2) reveal the following patterns:
-
-- **Environment** (17 features): Company size dominates — `log_total_assets` and `log_public_float` carry the largest positive coefficients. Larger companies consistently receive higher environment scores, reflecting both greater disclosure resources and rater methodology that rewards comprehensive reporting. The `mode_prob_high` soft split feature has a positive coefficient, confirming that the bimodal threshold structure contributes signal even when handled softly. FinBERT environment-pillar sentiment from Risk Factors contributes a smaller positive signal.
-
-- **Social** (27 features): The most distributed feature set. FinBERT social-pillar sentiment from Business and MD&A sections contributes alongside structured financial features and readability indicators. Mean Flesch-Kincaid grade shows a negative coefficient — less readable filings predict lower social scores, potentially capturing lower disclosure elaborateness in social program language.
-
-- **Governance** (2 features): Only 2 non-zero features selected. This is not a modeling failure but a data availability finding. Governance scores are primarily driven by board composition, director independence, executive compensation ratios, and shareholder rights provisions — all disclosed in proxy statements (Form DEF 14A), not 10-K filings. The model correctly identifies this data gap through near-zero coefficient selection.
-
-- **Cross-target shared features** (Figure 3): Industry dummies for Energy, Utilities, and Healthcare appear across multiple targets. These encode baseline sector-level ESG score differences unrelated to individual company disclosure quality.
-
-### Industry-Level Performance
-
-The industry R² heatmap (Figure 4) shows heterogeneous performance. Energy and Utilities show stronger environment signal — these sectors have more standardized emissions and climate-risk disclosure language, creating a cleaner FinBERT signal. Healthcare shows stronger social signal, consistent with extensive labor and patient-care language in their 10-K filings. Financial sector performance is weak across all pillars, likely because financial-sector ESG depends heavily on portfolio holdings and governance structures not captured in 10-K text.
-
-Additional results including residual plots, per-industry breakdown tables, and grade-prediction confusion matrices are available in `work/final_model_validation.ipynb`. SHAP explainability analysis for the XGBoost comparison model is available in `work/shap_explainability_analysis.ipynb`.
 
 ---
 
 ## Discussion
 
-Our primary goal was to demonstrate that freely available SEC 10-K text carries statistically meaningful ESG signal that can be extracted at low cost. The social pillar result (test R² = 0.215) substantiates this claim — a retail investor using this pipeline would have meaningful directional signal about a company's social performance, with a mean absolute error of approximately 31 points on a score dimension with a ~150-point IQR. The model is best understood as a screening tool: useful for filtering companies into rough ESG tiers, not a replacement for commercial ratings.
-
-The environment result (test R² = 0.019) is weaker than the social result despite showing higher CV R² (0.311). The oracle mode-split experiment sheds light on why: within-mode environment R² reaches +0.74, showing the signal is genuinely learnable once the bimodal threshold is correctly handled. The bottleneck is mode classifier accuracy (61.5%), which is only marginally above the 52% class-balance baseline. The environment score is partially a classification problem — companies either have crossed the disclosure threshold or they have not — and linear regression is poorly suited for this without a reliable mode indicator.
-
-The governance finding is a meaningful methodological contribution. The model selected only 2 features for governance prediction and achieved near-zero R² on the holdout. This definitively confirms that 10-K filings do not contain the governance signals that commercial raters use. Board composition, director independence, executive compensation structure, and shareholder voting records are disclosed in proxy statements, not annual reports. Any future effort to predict governance scores using free public data must incorporate proxy statement NLP.
-
-Regarding the stakeholder connection: the pipeline is fully open-source and uses only freely available data. A retail investor could run this pipeline to obtain a free directional ESG estimate for any public company filing with the SEC. However, investment-grade accuracy (typically implied by commercial R² values of 0.6–0.8) is not achieved, and the model should not be used as a substitute for professional ESG analysis for high-stakes investment decisions.
-
 ---
 
 ## Limitations
-
-**Dataset scale**: 323 companies is small for a machine learning task with approximately 130 features. ElasticNet's sparse feature selection partially compensates, but the 67-company test set creates noisy holdout estimates. A single cluster of unusual companies in the test set can shift R² substantially. Results should be interpreted as approximate directional evidence rather than precise performance guarantees.
-
-**Label noise**: ESG ratings from different providers correlate at only 0.54–0.61 with each other[^4]. Our model is trained against one provider's 2022 scores. R² against a noisy label has a theoretical ceiling below 1.0 even with a perfect model, making direct comparison to studies using different target labels misleading.
-
-**Temporal snapshot**: The dataset is a cross-sectional 2022 snapshot. The model has not been tested across time. ESG rating methodology evolves annually, and a model trained on 2022 ratings may not generalize to current ratings for the same companies.
-
-**CV R² bias**: Reported CV R² values are upward-biased because alpha selection and cross-validation use the same training data. Test R² on the 67-company holdout is the unbiased estimate, but is itself noisy at this sample size. True performance likely falls between the two figures.
-
-**Industry and size imbalance**: The dataset skews toward large-cap companies in Industrials, Financials, and Consumer sectors. Generalization to under-represented sectors (Real Estate, Utilities) and to small-cap companies is untested.
-
-**Governance structural ceiling**: Governance is not predictable from 10-K text and financial fundamentals. This is a data availability constraint, not a modeling limitation, and cannot be resolved without incorporating proxy statement data.
-
 ---
 
 ## Future Work
-
-**Improved environment mode classification**: The oracle mode-split result (environment R² = +0.74) shows the environment signal is learnable within modes. Improving the mode classifier — potentially by incorporating disclosure-volume features or environmental keyword density as a proxy for voluntary reporting — could meaningfully improve environment performance.
-
-**Proxy statement integration**: Adding Form DEF 14A (proxy statement) NLP would directly address the governance data ceiling. Proxy statements contain board composition, director independence flags, executive compensation tables, and shareholder proposal language — the exact signals governance scores are built on.
-
-**Expanded training set**: SEC EDGAR contains 10-K filings for thousands of public companies. Expanding beyond the 323 ESG-rated companies via semi-supervised learning could improve model robustness and reduce sensitivity to the small holdout sample.
-
-**Temporal validation**: Testing the pipeline on 2023 and 2024 filings against updated ESG ratings would assess temporal generalization and identify whether annual score drift reduces model applicability over time.
-
-**Richer text representations**: Fine-tuned sentence-level ESG classifiers — trained on labeled ESG-specific sentences rather than general financial sentiment — could outperform FinBERT as the text feature backbone. Section-level embeddings from a larger language model could capture topic interactions that per-sentence FinBERT aggregation misses.
 
 ---
 

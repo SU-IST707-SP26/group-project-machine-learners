@@ -50,14 +50,26 @@
 - CV R² is biased upward (alpha selected to maximize same CV); Test R² on 67 companies is noisy but unbiased — true performance lies between the two
 - l1_ratio = 0.99 across all targets confirms near-pure Lasso optimal; sparse signal structure confirmed
 
+*Final Report Draft — `final/submission.md` (M7.T2)*
+- Created initial draft covering all rubric sections: Title, Team, Introduction, Literature Review, Data and Methods, Supporting Files, Results, Discussion, Limitations, Future Work, References
+- Merged with teammate's (Ethan) draft which contributed Introduction, Literature Review, and 8 footnoted citations
+- Data section: ESG dataset description, 10-K extraction pipeline (709 → 332 → 323), SEC fundamentals, four figures referenced
+- Methods section: full 8-group feature pipeline, LSA and hard mode-split exclusion rationale, model selection table, training/evaluation protocol
+- Results section: holdout metrics table, per-pillar feature importance narrative, industry performance narrative
+- Discussion, Limitations, Future Work written; governance structural ceiling, environment mode-split gap, and stakeholder connection addressed
+
 **Files Created**:
 - `work/structural_features_extended.ipynb`
 - `work/tfidf_lsa_features.ipynb`
 - `work/mode_split_modeling.ipynb`
 
+
 **Files Modified**:
 - `work/Feature_Extraction_and_Modeling.ipynb` (max_sentences 100 → 300)
 - `work/final_model_validation.ipynb` (new data loading, extended structural + mode_prob feature, updated markdown and summary)
+- `work/README.md` (indexed 3 new notebooks, updated final_model_validation description)
+- `admin/WORKPLAN.md` (M5.T6, M6.T1–T3, M6.T5–T6 marked complete; changelog entry added)
+- `final/submission.md` (added to Data and Methods section)
 
 **Files Generated**:
 - `data/finbert_features/finbert_features.csv` (updated, 300-cap)
@@ -67,7 +79,7 @@
 - `data/finbert_features/final_model_metrics.csv` (updated)
 - `data/finbert_features/final_model_industry_performance.csv` (updated)
 
-**Next Steps**: Complete M6.T4 (explainability documentation — compare ElasticNet coefficients against known ESG rating drivers). Write final report (M7.T2) — Caden by hand. Update work/README.md to index the three new notebooks.
+**Next Steps**: Add Kaggle dataset URL to submission.md. Confirm figures are copied to `final/` per rubric requirement. Team review and finalize narrative before submission.
 
 ---
 
