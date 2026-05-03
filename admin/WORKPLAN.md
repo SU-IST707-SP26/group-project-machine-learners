@@ -56,7 +56,7 @@
 
 ### Milestone 7: Visualizations, Final Report, Presentation
 - [ ] M7.T1 — Build visualizations for model performance, SHAP values, and ESG score distributions (X)
-- [ ] M7.T2 — Write final report covering methodology, results, and limitations (X)
+- [⏳] M7.T2 — Write final report covering methodology, results, and limitations (Team) — Title, Team, Introduction, and Literature Review drafted in final/submission.md; remaining sections placeholders
 - [✅] M7.T3 — Prepare and deliver Checkpoint 3 presentation (Team) — submitted as presentation/submission.pdf
 
 ---
@@ -154,3 +154,6 @@
 ### 2026-04-25
 - (Ethan) ✅ M7.T3 — Checkpoint 3 presentation complete and submitted as presentation/submission.pdf. 8-slide deck covering problem/stakeholder, envisioned solution, data, initial results (ElasticNet Model Evaluation + ElasticNet Model Findings), challenges, and plan & goals. Results slides built around final_model_validation.ipynb outputs.
 - (Caden) 🆕 — Created work/README.md: structured index of all 11 supporting notebooks organized into Data Collection, EDA, Feature Engineering and Modeling, and Final Model Evaluation sections. Directly addresses final rubric requirement for a notebook index.
+
+### 2026-05-03
+- (Ethan) ⏳ M7.T2 — Began drafting final/submission.md. Title, Team, Introduction, and Literature Review complete. Data and Methods, Supporting Files, Results, Discussion, Limitations, Future Work sections remain as placeholders.
