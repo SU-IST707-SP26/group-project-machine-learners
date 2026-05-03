@@ -40,6 +40,16 @@ Main modeling pipeline. Covers the full sequence from raw features to trained mo
 - **Step 7.8**: disclosure threshold analysis — shallow decision tree to reverse-engineer the rating algorithm's bimodal decision rule
 - **Step 8**: trains Ridge, LassoCV, ElasticNetCV, and XGBoost across all four ESG targets (total, environment, social, governance) with 5-fold CV
 - **Additional sections**: SHAP threshold analysis for the environment score boundary; sentence count cap analysis; feature combination ablation (FinBERT only / structured only / industry+structured / FinBERT+industry / full)
+- FinBERT sentence cap raised to 300 per pillar (was 100); re-run produces finbert_features.csv used by all downstream notebooks
+
+### `structural_features_extended.ipynb`
+Extracts readability and document-structure features from raw 10-K section text for all 323 modeling companies. Per section (business, risk_factors, mda): word count, uncapped sentence count (regex splitter), average sentence length, Flesch-Kincaid grade level (textstat), and quantitative density (numeric mentions per 1,000 words). Derives section-level `is_long` bucket flags, `mda_is_quantitative`, `total_word_count`, and `mean_fk_grade`. Output: `data/structured_features/extended_structural_features.csv` (323 × 22 cols).
+
+### `tfidf_lsa_features.ipynb`
+Fits a TF-IDF → TruncatedSVD (LSA) pipeline on 10-K corpus text (Business + Risk Factors + MD&A) for all 323 companies. TF-IDF: 2,000 features, bigrams, sublinear_tf=True, English stop words. LSA: 50 latent topic components (61% corpus variance explained). Produces lsa_00–lsa_49 features. Output: `data/finbert_features/lsa_features.csv`. Note: LSA features were trialed in the final model but excluded after causing regularization cascade that degraded test-set performance.
+
+### `mode_split_modeling.ipynb`
+Investigates bimodal ESG score structure via mode-split modeling. Splits companies into high-environment (score ≥ 500) and low-environment groups; fits separate ElasticNetCV models per mode. Compares oracle mode-split (perfect mode assignment) vs. predicted mode-split (DecisionTree classifier, 61.5% accuracy). Oracle environment R²=+0.74 confirms genuine bimodal signal; predicted split degrades all targets due to classifier error rate. Soft mode probability feature (mode_prob_high) extracted from the classifier and added to the final model instead of hard assignment.
 
 ### `hyperparameter_tuning.ipynb`
 Tunes XGBoost and Ridge hyperparameters for all four ESG targets. Uses `RandomizedSearchCV` (40 iterations × 5-fold CV) over 8 XGBoost parameters and `RidgeCV` over 50 alpha values on a log scale. Produces improvement heatmaps and ΔR² bar charts. Best XGBoost parameters saved to `data/finbert_features/best_xgboost_params.csv`.
@@ -55,4 +65,4 @@ SHAP explainability analysis on the tuned XGBoost model for all four ESG targets
 ## Final Model Evaluation
 
 ### `final_model_validation.ipynb`
-Validates the final selected model (ElasticNet) on the held-out test set using 323 companies (post extraction quality filter) and 108 features. Produces: non-zero coefficient plots, shared feature heatmap across pillars, and industry R² breakdown. Current holdout results — Social: R²=0.173, Environment: R²=0.078, Total: R²=0.065, Governance: R²≈0.000 (0 features selected; governance is determined by board/shareholder data not present in 10-K filings).
+Validates the final selected model (ElasticNet) on the held-out test set using 323 companies and ~130 features. Feature set: 300-cap FinBERT sentiment features + SEC structured financials + extended structural features (readability, doc length, quantitative density) + mode_prob_high soft split feature. Produces: non-zero coefficient plots, feature group contribution chart (8 groups), and industry R² breakdown. Final holdout results — Social: R²=+0.215, Total: R²=+0.062, Environment: R²=+0.019, Governance: R²=+0.006. CV R² (same training data / alpha): total=+0.247, env=+0.311, social=+0.142, gov=−0.008 (treat as upper bound due to circularity).

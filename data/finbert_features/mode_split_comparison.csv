@@ -1,0 +1,5 @@
+Target,Unified R²,Mode-Split R²,Oracle R²,ΔR² (split-uni),ΔR² (oracle-uni)
+Total,0.0307,-0.4591,0.5995,-0.4898,0.5688
+Environment,0.069,-0.4632,0.7438,-0.5322,0.6748
+Social,0.119,-0.0929,0.2435,-0.2119,0.1246
+Governance,0.0105,-0.2494,0.046,-0.2599,0.0355

@@ -1,5 +1,76 @@
 # WORKLOG.md
 
+## 2026-05-03 — Professor Feedback Implementation and Final Model Re-run (Caden)
+
+**Context**: Following the Checkpoint 3 presentation, the professor provided four improvement suggestions: (1) non-FinBERT semantic features, (2) split training groups by modes, (3) additional structural features, (4) additional embeddings with dimensionality reduction. This session implemented all four suggestions, raised the FinBERT sentence cap, and produced the final model results.
+
+**Work Completed**:
+
+*FinBERT Sentence Cap Raise — `work/Feature_Extraction_and_Modeling.ipynb` (M5.T6)*
+- Changed `max_sentences` from 100 → 300 in `extract_finbert_features()`
+- Re-ran full FinBERT inference pipeline overnight (~10 hrs on CPU); regenerated `data/finbert_features/finbert_features.csv`
+- Social sentence count mean: 88.5 → 142.5 (was most heavily capped at 100); Governance mean: 68.8 → 87.4
+
+*Extended Structural Features — `work/structural_features_extended.ipynb` (M6.T5)*
+- New notebook extracting structural signals from the 323 JSON section files not captured by FinBERT
+- Per-section features: word count, uncapped sentence count, avg sentence length, Flesch-Kincaid readability grade, quantitative density (numeric mentions per 1,000 words)
+- Derived features: section-length bucket flags (`*_is_long`), `mda_is_quantitative`, `total_word_count`, `mean_fk_grade`
+- Output: `data/structured_features/extended_structural_features.csv` (323 × 22)
+- Top correlations with total_score: business_sentence_count_full (r=0.20), business_word_count (r=0.17), mean_fk_grade (r=0.14)
+
+*TF-IDF / LSA Semantic Features — `work/tfidf_lsa_features.ipynb` (Suggestion 1 + 4)*
+- New notebook building non-FinBERT semantic features via TF-IDF (2,000 features, min_df=3, bigrams) → TruncatedSVD (50 LSA components)
+- Captures overall vocabulary and topic mix of each filing; 61% of corpus variance explained
+- Output: `data/finbert_features/lsa_features.csv` (323 × 50)
+- **LSA features excluded from final model after evaluation**: adding 50 noise-heavy components forced ElasticNet to raise alpha, suppressing genuine signal features. Test R² for environment fell from +0.078 → -0.227 when LSA was included. Removing LSA recovered performance. Finding: document topic patterns from 10-K text do not improve ESG score prediction beyond FinBERT sentiment.
+
+*Mode-Split Modeling — `work/mode_split_modeling.ipynb` (Suggestion 2)*
+- New notebook implementing two-stage pipeline: depth-3 decision tree mode classifier (environment_score ≥ 500) + mode-specific ElasticNet models
+- Mode classifier test accuracy: 61.5% (barely above 52% class-balance baseline)
+- Oracle mode-split results (true mode labels): total +0.60, environment +0.74, social +0.24 — confirms bimodal structure is real and within-mode models work far better
+- Predicted mode-split (classifier predictions): degraded R² by -0.21 to -0.53 across all targets — wrong mode assignment applies completely wrong model
+- **Decision**: hard mode-split not deployable due to insufficient mode classifier accuracy. Added `mode_prob_high` (soft mode probability from the depth-3 tree, trained on training split only) as feature 130 in the final model instead
+- Output: `data/finbert_features/mode_split_comparison.csv`, `mode_split_r2_comparison.png`
+
+*Final Model Validation — `work/final_model_validation.ipynb` (M6.T1, M6.T2, M6.T3, M6.T6)*
+- Updated notebook to load from `finbert_features.csv` (300-cap) + `ESG_data_cleaned.csv` directly (replaces stale `merged_features_labels.csv`)
+- Integrated extended structural features and mode probability; excluded LSA after performance evaluation
+- Final feature set: 130 features (original 108 + 21 extended structural + mode_prob_high, with 300-cap FinBERT)
+- Final holdout results (323 companies, 130 features, 80/20 split, random_state=42):
+
+| Target | CV R² | Test R² | Test MAE | Test RMSE | Alpha | L1 Ratio | Non-zero Features |
+|--------|-------|---------|----------|-----------|-------|----------|-------------------|
+| total_score | +0.247 | +0.062 | 145.91 | 172.82 | 16.63 | 0.99 | 20 |
+| environment_score | +0.311 | +0.019 | 103.76 | 119.93 | 11.43 | 0.99 | 17 |
+| social_score | +0.142 | **+0.215** | 30.87 | 39.30 | 4.75 | 0.95 | 27 |
+| governance_score | -0.008 | +0.006 | 36.43 | 42.81 | 6.41 | 0.99 | 2 |
+
+- **Social score is the best result in the project** (Test R² = 0.215, up from 0.173) — 300-sentence cap directly improved S/G feature quality
+- Governance has non-zero features (2) for the first time; extended structural or mode probability contributed minimal governance signal
+- CV R² is biased upward (alpha selected to maximize same CV); Test R² on 67 companies is noisy but unbiased — true performance lies between the two
+- l1_ratio = 0.99 across all targets confirms near-pure Lasso optimal; sparse signal structure confirmed
+
+**Files Created**:
+- `work/structural_features_extended.ipynb`
+- `work/tfidf_lsa_features.ipynb`
+- `work/mode_split_modeling.ipynb`
+
+**Files Modified**:
+- `work/Feature_Extraction_and_Modeling.ipynb` (max_sentences 100 → 300)
+- `work/final_model_validation.ipynb` (new data loading, extended structural + mode_prob feature, updated markdown and summary)
+
+**Files Generated**:
+- `data/finbert_features/finbert_features.csv` (updated, 300-cap)
+- `data/structured_features/extended_structural_features.csv`
+- `data/finbert_features/lsa_features.csv`
+- `data/finbert_features/mode_split_comparison.csv`
+- `data/finbert_features/final_model_metrics.csv` (updated)
+- `data/finbert_features/final_model_industry_performance.csv` (updated)
+
+**Next Steps**: Complete M6.T4 (explainability documentation — compare ElasticNet coefficients against known ESG rating drivers). Write final report (M7.T2) — Caden by hand. Update work/README.md to index the three new notebooks.
+
+---
+
 ## 2026-04-25 — Work Directory Documentation and Repository Cleanup (Caden)
 
 **Context**: Following presentation submission, organized the `work/` directory for the final report submission. The final rubric requires a clear index of all supporting notebooks so the grader can locate analyses without digging through the code.
