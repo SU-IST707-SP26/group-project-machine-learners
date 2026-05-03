@@ -71,6 +71,39 @@
 
 ---
 
+## 2026-05-03 — Final Report Drafting: Title, Team, Introduction, Literature Review (Ethan)
+
+**Context**: Final report (`final/submission.md`) due as part of Milestone 7. Began drafting the report structure and completing the narrative sections that don't depend on pending model re-runs.
+
+**Work Completed**:
+
+*Report Structure — `final/submission.md`*
+- Created `submission.md` with all rubric-required sections: Title, Team, Introduction, Literature Review, Data and Methods (Data, Methods), Supporting Files, Results, Discussion, Limitations, Future Work, References.
+- Remaining sections left as placeholders (`<!-- TODO -->`).
+
+*Title*
+- Updated from proposal title to: "Democratizing ESG: Predicting Corporate Sustainability Scores from Free Public Data"
+- Changed "Free Public Filings" → "Free Public Data" to reflect that the pipeline uses both SEC 10-K filings and EDGAR XBRL financial fundamentals.
+
+*Introduction*
+- Rewrote from proposal's Heilmeier Q&A format into paragraph prose per rubric requirements.
+- Framed the project as a proof of concept rather than a production-ready system.
+- Connected stakeholder need (retail investors priced out of ESG data) to the methodological contribution (free public data can extract interpretable ESG signal via a transparent pipeline).
+- Included current best result (Social R² = 0.173) and governance structural ceiling finding to set honest expectations before the Results section.
+
+*Literature Review*
+- Carried over first three paragraphs from the proposal unchanged (ESG rating landscape, reliability limitations, prior ML work).
+- Added two new paragraphs: (1) critique of prior work's reliance on financial ratios and prior ESG ratings as features, framing those as expensive or self-reinforcing; (2) methodological departure — free data constraint, ElasticNet selection driven by sparse signal structure, SHAP for transparency.
+- Condensed the proposal's three-paragraph stakeholder analysis into a single closing paragraph focused on connecting stakeholders to methods.
+- Renumbered all footnote references sequentially (1–9) from the proposal's gapped numbering.
+
+**Files Created**:
+- `final/submission.md`
+
+**Next Steps**: Write Data and Methods sections. Pull `work/README.md` (Caden's notebook index) into the Supporting Files section. Complete Results, Discussion, Limitations, and Future Work after pending model re-run (M6.T6).
+
+---
+
 ## 2026-04-25 — Work Directory Documentation and Repository Cleanup (Caden)
 
 **Context**: Following presentation submission, organized the `work/` directory for the final report submission. The final rubric requires a clear index of all supporting notebooks so the grader can locate analyses without digging through the code.

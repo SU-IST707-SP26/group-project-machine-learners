@@ -56,7 +56,7 @@
 
 ### Milestone 7: Visualizations, Final Report, Presentation
 - [ ] M7.T1 — Build visualizations for model performance, SHAP values, and ESG score distributions (X)
-- [ ] M7.T2 — Write final report covering methodology, results, and limitations (X)
+- [⏳] M7.T2 — Write final report covering methodology, results, and limitations (Team) — Title, Team, Introduction, and Literature Review drafted in final/submission.md; remaining sections placeholders
 - [✅] M7.T3 — Prepare and deliver Checkpoint 3 presentation (Team) — submitted as presentation/submission.pdf
 
 ---
@@ -164,3 +164,4 @@
 - (Caden) ✅ M6.T1 — Final holdout evaluation complete. All four targets now positive on holdout. Social Test R²=+0.215 is the strongest pillar signal.
 - (Caden) ✅ M6.T2 — Coefficient analysis updated in final_model_validation.ipynb for 8 feature groups; mode_prob_high included.
 - (Caden) ✅ M6.T3 — Industry R² heatmap updated with final feature set.
+- (Ethan) ⏳ M7.T2 — Began drafting final/submission.md. Title, Team, Introduction, and Literature Review complete. Remaining sections filled in by Caden in subsequent merge.
