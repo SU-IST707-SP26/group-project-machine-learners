@@ -1,5 +1,29 @@
 # WORKLOG.md
 
+## 2026-05-04 — Final Report: Limitations and Future Work Sections (Ethan)
+
+**Context**: Continuing final report drafting (`final/submission.md`). Caden completed Data and Methods, Supporting Files, and Results sections on 05-03. Today focused on the remaining narrative sections.
+
+**Work Completed**:
+
+*Future Work — `final/submission.md`*
+- Drafted five future directions: additional text sources (sustainability reports, proxy statements, CDP disclosures), HTML-aware extraction parser, improved mode classifier to unlock two-stage pipeline, longitudinal validation across multiple filing years, and cloud migration for pipeline runtime.
+- Noted that longitudinal validation was not possible with the single-year Kaggle ESG dataset.
+- Governance ceiling tied specifically to proxy statement data as the most promising fix.
+
+*Limitations — `final/submission.md`*
+- Drafted six limitation areas: 10-K filings as indirect ESG signal source, small sample size and noisy test R², governance structural ceiling, bimodal score distribution as rating provider artifact, extraction pipeline selection bias (47% yield), and CV R² upward bias from ElasticNetCV fold reuse.
+- Closing sentence frames data availability as the common thread across all limitations.
+
+*Introduction and Literature Review Updates*
+- Updated feature count from 108 → 130 in both sections to reflect Caden's final model (extended structural features + mode_prob_high).
+- Updated Introduction Social R² from 0.173 → 0.215 to match final results.
+
+**Files Modified**:
+- `final/submission.md` (Future Work and Limitations sections drafted; Introduction and Literature Review feature count updated)
+
+**Next Steps**: Write Discussion section. Final team review of complete submission.md before submission.
+
 ## 2026-05-03 — Professor Feedback Implementation and Final Model Re-run (Caden)
 
 **Context**: Following the Checkpoint 3 presentation, the professor provided four improvement suggestions: (1) non-FinBERT semantic features, (2) split training groups by modes, (3) additional structural features, (4) additional embeddings with dimensionality reduction. This session implemented all four suggestions, raised the FinBERT sentence cap, and produced the final model results.

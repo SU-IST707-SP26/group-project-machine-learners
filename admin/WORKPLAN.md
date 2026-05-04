@@ -56,7 +56,7 @@
 
 ### Milestone 7: Visualizations, Final Report, Presentation
 - [ ] M7.T1 — Build visualizations for model performance, SHAP values, and ESG score distributions (X)
-- [⏳] M7.T2 — Write final report covering methodology, results, and limitations (Team) — Title, Team, Introduction, and Literature Review drafted in final/submission.md; remaining sections placeholders
+- [⏳] M7.T2 — Write final report covering methodology, results, and limitations (Team) — Title, Team, Introduction, Literature Review drafted by Ethan; Data and Methods, Supporting Files, Results drafted by Caden; Limitations and Future Work drafted by Ethan; Discussion remaining
 - [✅] M7.T3 — Prepare and deliver Checkpoint 3 presentation (Team) — submitted as presentation/submission.pdf
 
 ---
@@ -165,3 +165,6 @@
 - (Caden) ✅ M6.T2 — Coefficient analysis updated in final_model_validation.ipynb for 8 feature groups; mode_prob_high included.
 - (Caden) ✅ M6.T3 — Industry R² heatmap updated with final feature set.
 - (Caden/Ethan) ⏳ M7.T2 — Drafted final/submission.md. Ethan: Title, Team, Introduction, Literature Review, footnoted references. Caden: Data and Methods.
+
+### 2026-05-04
+- (Ethan) 🔄 M7.T2 — Drafted Limitations and Future Work sections in final/submission.md. Updated Introduction and Literature Review feature count (108 → 130) and Social R² (0.173 → 0.215) to match final model results. Discussion section remaining.
