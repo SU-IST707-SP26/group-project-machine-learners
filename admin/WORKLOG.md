@@ -1,5 +1,31 @@
 # WORKLOG.md
 
+## 2026-05-05 — Final Report: Feature Importance, Discussion, and Grammar Review (Caden)
+
+**Context**: Completing the remaining narrative gaps in `final/submission.md`. 
+
+**Work Completed**:
+
+*Feature Importance Section — `final/submission.md` (M6.T4)*
+- Replaced the one-line placeholder with a full interpretive section covering all seven feature groups selected by ElasticNet.
+- Key interpretations documented: `mode_prob_high` as the dominant cross-target predictor reflecting the bimodal disclosure threshold; company scale (`log_total_assets`, `log_public_float`) as institutional scrutiny proxy; ESG keyword features confirming disclosure breadth drives ratings; FinBERT sentiment features (`S_pos_std`, `E_sentence_count`) as disclosure quality signals; industry dummies encoding sector ESG norms; negative `kw_executive_pay_freq_log` coefficient for Social as a compensation-controversy proxy; governance structural ceiling confirmed by only 2 non-zero features (`mode_prob_high`, `mda_fk_grade`), neither governance-specific.
+- Updated figure caption to state correct feature counts and explain color coding.
+
+*Discussion Section — `final/submission.md` (M7.T2)*
+- Restructured from four loosely connected paragraphs to three focused paragraphs.
+- Para 1: Explicit per-pillar goal assessment — Social (success), Total (weak positive), Environment (CV/test gap attributed to bimodality not overfitting), Governance (not achievable from this data).
+- Para 2: Two structural obstacles synthesized (bimodality threshold effect, governance data gap), followed by claim of the transparency goal as fully achieved — ElasticNet coefficients provide human-readable explanations that commercial ratings do not.
+- Para 3: Both stakeholder groups addressed — retail investors (directional Social signal, free tier filter), small/mid-cap companies (free self-assessment tool with coefficient-level explanations); closes with what additional data sources would close the remaining gap.
+
+*Grammar Corrections — `final/submission.md`*
+- Fixed across all sections: comma splice (Introduction), subject-verb disagreement ("there's no proprietary feeds"), missing apostrophe ("ESG ratings' widespread use"), misspellings (mandated, benefit, were, zeros, within, inaccessible), missing commas, "it's" → "its" (×2), "multicollinearity", "Ridge", "aggressive", "high-dimensional", missing verb ("dataset is extremely limited"), "bimodal nature", "both...or" → "either...or".
+
+**Files Modified**:
+- `final/submission.md` (Feature Importance section rewritten, Discussion section rewritten, grammar corrections throughout)
+- `data/finbert_features/final_model_coefficients.png` (regenerated to match current model)
+
+---
+
 ## 2026-05-05 — Repository Cleanup and Final Report SHAP Updates (Ethan)
 
 **Context**: Cleaning up the `work/` directory and updating `final/submission.md` to remove SHAP references that do not apply to the final ElasticNet model.

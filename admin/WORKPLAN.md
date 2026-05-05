@@ -50,13 +50,13 @@
 - [✅] M6.T1 — Validate final model on holdout test set and report all evaluation metrics (Caden) — final holdout metrics: total Test R²=+0.062, env=+0.019, social=+0.215, gov=+0.006; all targets positive
 - [✅] M6.T2 — Coefficient analysis and feature explainability for ElasticNet final model (Caden) — non-zero coefficient plots and feature group contribution chart updated in final_model_validation.ipynb; 8 feature groups including mode_prob_high
 - [✅] M6.T3 — Analyze model performance across industries and ESG pillars (Caden) — industry R² heatmap updated in final_model_validation.ipynb with final feature set (~130 features)
-- [ ] M6.T4 — Document explainability findings and compare against commercial ESG rating methodology (X)
+- [✅] M6.T4 — Document explainability findings and compare against commercial ESG rating methodology (Team) — Feature Importance section written with full coefficient interpretations across all feature groups; governance structural ceiling confirmed via 2 non-zero features
 - [✅] M6.T5 — Add section-presence binary features from 10-K filings (did each section exist? section length buckets?) as structural signals and evaluate impact on model performance (Caden) — implemented as extended structural features: word_count, sentence_count, avg_sentence_length, fk_grade, quant_density, is_long flags per section; saved to data/structured_features/extended_structural_features.csv
 - [✅] M6.T6 — Re-run final_model_validation.ipynb after feature improvements (M5.T6 sentence cap + M6.T5 section features + mode_prob_high soft split feature) to produce final holdout metrics (Caden) — LSA features trialed and stripped after degrading performance; final model uses ~130 features
 
 ### Milestone 7: Visualizations, Final Report, Presentation
-- [ ] M7.T1 — Build visualizations for model performance, SHAP values, and ESG score distributions (X)
-- [⏳] M7.T2 — Write final report covering methodology, results, and limitations (Team) — Title, Team, Introduction, Literature Review drafted by Ethan; Data and Methods, Supporting Files, Results drafted by Caden; Limitations and Future Work drafted by Ethan; Introduction and Literature Review SHAP references removed by Ethan; Discussion remaining
+- [✅] M7.T1 — Build visualizations for model performance, and ESG score distributions (Caden) — all figures generated in final_model_validation.ipynb and referenced in submission.md
+- [✅] M7.T2 — Write final report covering methodology, results, and limitations (Team) — all sections complete: Introduction/Literature Review (Ethan), Data and Methods/Supporting Files/Results (Caden), Limitations/Future Work (Ethan), Feature Importance section rewritten with full interpretations, Discussion rewritten with stakeholder connection and transparency goal (Caden); grammar corrections applied throughout
 - [✅] M7.T3 — Prepare and deliver Checkpoint 3 presentation (Team) — submitted as presentation/submission.pdf
 
 ---
@@ -172,3 +172,6 @@
 ### 2026-05-05
 - (Ethan) 🔄 M7.T2 — Removed SHAP references from Introduction and Literature Review in final/submission.md; ElasticNet standardized coefficients documented as the interpretability mechanism. Updated Supporting Files table and Model Selection paragraph to reflect work/archive/ notebook paths.
 - (Ethan) 🆕 — Created work/archive/ subfolder and moved five exploratory notebooks out of active pipeline: tfidf_lsa_features.ipynb, mode_split_modeling.ipynb, hyperparameter_tuning.ipynb, shap_explainability_analysis.ipynb, model_comparison_and_grade_classifier.ipynb. Updated work/README.md with Archive section documenting all five.
+- (Caden) ✅ M6.T4 — Rewrote Feature Importance section in final/submission.md with full coefficient interpretations for all feature groups; regenerated final_model_coefficients.png to resolve version mismatch between saved figure and current model results.
+- (Caden) ✅ M7.T1 — Confirmed all figures generated and referenced in final/submission.md.
+- (Caden) ✅ M7.T2 — Rewrote Discussion section with three-paragraph structure addressing goal achievement per pillar, structural obstacles, transparency finding, and stakeholder use cases. Applied grammar corrections throughout submission.md.
