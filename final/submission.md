@@ -83,7 +83,7 @@ The final model used approximately 130 features across eight groups:
 
 **Extended Structural Features** (21 features): Per-section Flesch-Kincaid readability grade (via `textstat`), quantitative density (numeric token mentions per 1,000 words), uncapped sentence count, average sentence length, and section-length bucket flags. Derived cross-section features include total word count, mean FK grade, and an MD&A quantitative density flag. Top correlations with total score: business sentence count (r = 0.20), business word count (r = 0.17), mean FK grade (r = 0.14).
 
-**Mode Probability Feature** (1 feature, `mode_prob_high`): A depth-3 DecisionTree classifier was trained on the training split to predict whether a company falls in the "high environment" mode (score ≥ 500), reflecting the bimodal threshold structure. Rather than hard mode assignment (which degraded performance — see Results), the classifier's continuous probability output was used as a soft feature. The classifier was fit on training data only before the train/test split to prevent label leakage.
+**Mode Probability Feature** (1 feature, `mode_prob_high`): A depth-3 DecisionTree classifier was trained on the training split to predict whether a company falls in the "high environment" mode (score ≥ 500), reflecting the bimodal threshold structure. Rather than hard mode assignment (which degraded performance — see Results), the classifier's continuous probability output was used as a soft feature. The classifier was fit on training data only, before the train/test split to prevent label leakage.
 
 **Industry One-Hot Encoding** (38 features): GICS sector and subsector dummies encoding industry membership, capturing large between-industry variance in ESG scores that text features alone cannot recover.
 
@@ -102,13 +102,13 @@ Four regression models were compared across all four ESG targets using a consist
 | ElasticNetCV | +0.194 | Best across all targets; automatic alpha/l1_ratio selection |
 | LassoCV | +0.186 | Similar to ElasticNet; slightly less stable on correlated industry features |
 | XGBoost | +0.084 | Overfits on 323-company dataset; CV R² degrades with tuning |
-| Ridge | −0.025 | Cannot perform feature selection; all 108 features remain active |
+| Ridge | −0.025 | Cannot perform feature selection; all features remain active |
 
-ElasticNet was selected as the final model due to it's CV R² value and it's ability to deal with high dimensional data. ElasticNet also acts as a form of dimensionality reduction technique and mitigates multi-colinearity issues.
+ElasticNet was selected as the final model due to it's CV R² value and it's ability to deal with high dimensional data. ElasticNet also acts as a form of dimensionality reduction technique and mitigates multi-colinearity issues, because of its feature selection.
 
 #### Training and Evaluation
 
-The final model used `ElasticNetCV` (5-fold CV, 100 alpha values, 10 l1_ratio values, max_iter = 10,000) trained on the 80% training split (n = 256 companies). Features were scaled with `StandardScaler` fit on training data only, as ElasticNet is scale-sensitive. Final evaluation used the 20% holdout test set (n = 67 companies). 5-fold CV R² was computed as an additional reference, but it is upward-biased because alpha selection uses the same folds — test R² is the unbiased performance estimate.
+The final model used `ElasticNetCV` (5-fold CV, 100 alpha values, 10 l1_ratio values, max_iter = 10,000) trained on the 80% training split (n = 256 companies). Features were scaled with `StandardScaler` fit on training data only, as ElasticNet is scale-sensitive. Final evaluation used the 20% holdout test set (n = 67 companies). 5-fold CV R² was computed as an additional reference, but it is upward-biased because alpha selection uses the same folds, test R² is the unbiased performance estimate.
 
 ---
 
@@ -168,12 +168,12 @@ The table below reports results from the held-out 20% test set (n = 67 companies
 <br>
 
 ![R^2 Bar Chart](../data/finbert_features/final_model_r2_bar.png)
-*Figure 2: Final model Test R² and 5-fold CV R² across all four ESG targets. Social achieves the strongest holdout result (Test R² = 0.215). CV R² is upward-biased due to alpha selection on the same training folds; test R² is the unbiased estimate.*
+*Figure 2: Final model Test R² and 5-fold CV R² across all four ESG targets. Social achieves the strongest holdout result (Test R² = 0.215).*
 
 
-**Interpreting error in original units**: ESG total scores span roughly 200–900, with an interquartile range of approximately 300 points. A total-score RMSE of 172.82 represents roughly 40–60% of the typical score range — the model identifies direction and rough tier but is not precise enough for investment-grade scoring. Social scores have a narrower IQR (~150 points); the social RMSE of 39.30 is a similar relative error, consistent with the stronger R².
+**Interpreting error in original units**: ESG total scores span roughly 200–900, with an interquartile range of approximately 300 points. A total-score RMSE of 172.82 represents roughly 40–60% of the typical score range, the model identifies direction and rough tier, but is not precise enough for investment-grade scoring. Social scores have a narrower IQR (~150 points); the social RMSE of 39.30 is a similar relative error, consistent with the stronger R².
 
-The l1_ratio of 0.99 across nearly all targets means the signal is near lasso optimal and the model is behaving more like a Lasso regression model while retaining a small (1%) component of Reidge regularization. This means the model is more agressive when selecting features and works well with this high dimensional use case.
+The l1_ratio of 0.99 across nearly all targets means the signal is near lasso optimal and the model is behaving more like a Lasso regression model while retaining a small (1%) component of Ridge regularization. This means the model is more aggressive when selecting features and works well with this high-dimensional use case.
 
 ### Feature Importance
 
@@ -190,11 +190,11 @@ The L1 penalty drove 110–128 of the 130 input features to exactly zero, leavin
 
 **FinBERT sentiment features capture disclosure quality signals.** `S_pos_std` — the standard deviation of positive sentiment scores across Social-section sentences — appears positively in both Total Score and Environment targets. Higher variance in positive sentiment indicates that companies include sentences with very strong positive language (peaks of enthusiasm about community programs, workforce initiatives), which the rating agency appears to reward. `E_sentence_count` loads positively on Total and Environment targets: longer Environmental section disclosures correlate with higher scores, reflecting that disclosure volume is itself a quality signal. `E_neg_std` and `E_neu_mean` appear in smaller roles, capturing the linguistic texture of environmental disclosures beyond simple sentiment averages.
 
-**Industry membership encodes between-sector ESG norms.** `ind_Airlines` carries the largest negative coefficient in Total Score (approximately −10), reflecting the aviation sector's high emissions exposure and lower environmental scores. `ind_Technology` appears as a positive predictor for Total and Environment, consistent with tech companies' lighter physical footprint relative to industrials. For Social Score, `ind_Airlines`, `ind_Automobiles`, `ind_Technology`, and `kw_executive_pay_freq_log` are the main negative predictors. The negative executive pay keyword coefficient (~−3.4 for Social) is notable: companies that discuss executive compensation more frequently in their 10-K tend to score lower on Social metrics, suggesting that companies facing compensation controversy write more defensively about pay — and the same underlying issues that generate that defensive language also produce lower Social scores.
+**Industry membership encodes between-sector ESG norms.** `ind_Airlines` carries the largest negative coefficient in Total Score (approximately −10), reflecting the aviation sector's high emissions exposure and lower environmental scores. `ind_Technology` appears as a positive predictor for Total and Environment, consistent with tech companies' lighter physical footprint relative to industrials. For Social Score, `ind_Airlines`, `ind_Automobiles`, `ind_Technology`, and `kw_executive_pay_freq_log` are the main negative predictors. The negative executive pay keyword coefficient (~−3.4 for Social) is notable: companies that discuss executive compensation more frequently in their 10-K tend to score lower on Social metrics, suggesting that companies facing compensation controversy write more defensively about pay, and the same underlying issues that generate that defensive language also produce lower Social scores.
 
 **Profitability features appear primarily in Social.** `profit_margin` and `return_on_equity` load positively for Social and Total Score targets, but carry small coefficients. More profitable companies may have greater capacity to invest in social programs, or strong financial management and strong social management may co-occur. `count_percent_renewable` and `ind_Electrical Equipment`, `ind_Utilities`, `ind_Road and Rail` are among the positive Social predictors, reflecting industries with more mature workforce and community relations disclosures.
 
-**Governance reveals a structural ceiling.** With only 2 non-zero features and a test R² near zero, Governance is effectively unpredictable from this feature set. The two features ElasticNet retained are `mode_prob_high` (the bimodal probability, again dominant at ~2.5) and `mda_fk_grade` (the Flesch-Kincaid readability grade of the MD&A section, coefficient ~0.5). Neither is a governance-specific signal. The model is essentially saying: the best it can do for Governance is to use general disclosure tier and document complexity as proxies. This result confirms that governance content — board composition, executive compensation structures, shareholder voting records, anti-takeover provisions — does not appear in 10-K narrative text or financial fundamentals in a way the model can leverage.
+**Governance reveals a structural ceiling.** With only 2 non-zero features and a test R² near zero, Governance is effectively unpredictable from this feature set. The two features ElasticNet retained are `mode_prob_high` (the bimodal probability, again dominant at ~2.5) and `mda_fk_grade` (the Flesch-Kincaid readability grade of the MD&A section, coefficient ~0.5). Neither is a governance-specific signal. The model is essentially saying the best it can do for Governance is to use general disclosure tier and document complexity as proxies. This result confirms that governance content — board composition, executive compensation structures, shareholder voting records, anti-takeover provisions — does not appear in 10-K narrative text or financial fundamentals in a way the model can leverage.
 
 ---
 
