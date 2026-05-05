@@ -36,7 +36,7 @@ Our primary stakeholders are retail investors, which are individual investors th
 
 Our target labels come from a Kaggle ESG ratings dataset aggregating scores from a major commercial rating provider for companies in the S&P 500 and adjacent indices as of 2022. The dataset contains 709 companies with four score dimensions:
 
-- **Total score** (0–1000): composite ESG rating
+- **Total score** (0–3000): composite ESG rating
 - **Environment score** (0–1000): emissions, climate risk, natural resources
 - **Social score** (0–1000): labor practices, human rights, community relations
 - **Governance score** (0–1000): board structure, executive compensation, shareholder rights
@@ -49,7 +49,7 @@ Score distributions show a characteristic bimodal structure in the environment p
 
 The dataset covers 11 GICS industry sectors with significant imbalance, Industrials and Financials together represent over 35% of the sample.
 
-*The Kaggle dataset is not included in this repository due to size constraints. It can be accessed at https://www.kaggle.com/datasets/tonylm00/business-companies-dataset?select=raw.csv.*
+*The Kaggle dataset is not included in this repository due to size constraints. It can be accessed at [https://www.kaggle.com/datasets/tonylm00/business-companies-dataset?select=raw.csv.](https://www.kaggle.com/datasets/alistairking/public-company-esg-ratings-dataset)*
 
 #### SEC 10-K Filings
 
