@@ -1,5 +1,32 @@
 # WORKLOG.md
 
+## 2026-05-05 — Repository Cleanup and Final Report SHAP Updates (Ethan)
+
+**Context**: Cleaning up the `work/` directory and updating `final/submission.md` to remove SHAP references that do not apply to the final ElasticNet model.
+
+**Work Completed**:
+
+*Repository Cleanup — `work/`*
+- Created `work/archive/` subfolder to separate exploratory notebooks from the active pipeline.
+- Moved five notebooks to `work/archive/`: `tfidf_lsa_features.ipynb`, `mode_split_modeling.ipynb`, `hyperparameter_tuning.ipynb`, `shap_explainability_analysis.ipynb`, and `model_comparison_and_grade_classifier.ipynb`.
+- All five are preserved in git history and documented in `work/README.md` under a new Archive section.
+
+*work/README.md*
+- Added Archive section documenting all five moved notebooks with rationale for each.
+- Removed moved notebooks from the Feature Engineering and Modeling section.
+
+*final/submission.md — SHAP and Notebook Path Updates*
+- Introduction paragraph 2: replaced "coefficients and SHAP values" with "standardized coefficients providing direct, interpretable feature-level explanations."
+- Literature Review closing paragraph: replaced SHAP justification sentence with two sentences clarifying that ElasticNet does not require post-hoc explainability tools and that standardized coefficients serve as the interpretability mechanism.
+- Supporting Files table: updated five notebook paths to reflect `archive/` subdirectory.
+- Model Selection paragraph: updated notebook reference from `work/model_comparison_and_grade_classifier.ipynb` to `work/archive/model_comparison_and_grade_classifier.ipynb`.
+
+**Files Modified**:
+- `work/README.md` (Archive section added; moved notebook entries updated)
+- `final/submission.md` (SHAP references removed; notebook paths updated)
+
+**Next Steps**: Write Discussion section. Final team review of complete submission.md before submission.
+
 ## 2026-05-04 — Final Report: Limitations and Future Work Sections (Ethan)
 
 **Context**: Continuing final report drafting (`final/submission.md`). Caden completed Data and Methods, Supporting Files, and Results sections on 05-03. Today focused on the remaining narrative sections.
