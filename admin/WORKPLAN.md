@@ -56,7 +56,7 @@
 
 ### Milestone 7: Visualizations, Final Report, Presentation
 - [ ] M7.T1 — Build visualizations for model performance, SHAP values, and ESG score distributions (X)
-- [⏳] M7.T2 — Write final report covering methodology, results, and limitations (Team) — Title, Team, Introduction, Literature Review drafted by Ethan; Data and Methods, Supporting Files, Results drafted by Caden; Limitations and Future Work drafted by Ethan; Discussion remaining
+- [⏳] M7.T2 — Write final report covering methodology, results, and limitations (Team) — Title, Team, Introduction, Literature Review drafted by Ethan; Data and Methods, Supporting Files, Results drafted by Caden; Limitations and Future Work drafted by Ethan; Introduction and Literature Review SHAP references removed by Ethan; Discussion remaining
 - [✅] M7.T3 — Prepare and deliver Checkpoint 3 presentation (Team) — submitted as presentation/submission.pdf
 
 ---
@@ -168,3 +168,7 @@
 
 ### 2026-05-04
 - (Ethan) 🔄 M7.T2 — Drafted Limitations and Future Work sections in final/submission.md. Updated Introduction and Literature Review feature count (108 → 130) and Social R² (0.173 → 0.215) to match final model results. Discussion section remaining.
+
+### 2026-05-05
+- (Ethan) 🔄 M7.T2 — Removed SHAP references from Introduction and Literature Review in final/submission.md; ElasticNet standardized coefficients documented as the interpretability mechanism. Updated Supporting Files table and Model Selection paragraph to reflect work/archive/ notebook paths.
+- (Ethan) 🆕 — Created work/archive/ subfolder and moved five exploratory notebooks out of active pipeline: tfidf_lsa_features.ipynb, mode_split_modeling.ipynb, hyperparameter_tuning.ipynb, shap_explainability_analysis.ipynb, model_comparison_and_grade_classifier.ipynb. Updated work/README.md with Archive section documenting all five.
